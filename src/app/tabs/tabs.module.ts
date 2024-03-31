@@ -14,6 +14,10 @@ import { RouterModule } from '@angular/router';
         path: 'rutinas',
         loadChildren: () => import('../rutinas/rutinas.module').then(m => m.RutinasModule)
       },
+      {
+        path: 'auth',
+        loadChildren: () => import('../auth/auth.module').then(m => m.AuthModule)
+      },
     ])
   ]
 })

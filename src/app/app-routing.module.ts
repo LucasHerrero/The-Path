@@ -11,6 +11,10 @@ const routes: Routes = [
     loadChildren: () => import('./rutinas/rutinas.module').then( m => m.RutinasModule)  
   },
   {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then( m => m.AuthModule)  
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
