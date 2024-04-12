@@ -6,15 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent {
+  emailInic = "";
+ PassInic = "";
   isLoginView = false; //TODO: CAMBIAR A TRUE PARA QUE APAREZCA EL LOGIN
 
 
-
-registroCheck () {
-
-  
-
-}
+  formInfoLogin(){
+    console.log(this.emailInic, this.PassInic);
+  }
 
 
 

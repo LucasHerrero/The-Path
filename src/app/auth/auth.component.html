@@ -1,21 +1,21 @@
 <div *ngIf="isLoginView; else registrationTemplate">
   <h2>Iniciar sesión</h2>
- 
+
   <!-- Formulario de inicio de sesión aquí -->
   <form>
     <ion-item>
       <ion-label position="floating">Correo electrónico</ion-label>
-      <ion-input type="emaill" required></ion-input>
+      <ion-input aria-label="Correo electrónico" [(ngModel)]="emailInic" type="email" required></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="passwordword" required></ion-input>
+      <ion-input aria-label="Contraseña" [(ngModel)]="PassInic" type="password" required></ion-input>
     </ion-item>
 
-    <ion-button expand="full" type="submit">Iniciar sesión</ion-button>
+    <ion-button (click)="formInfoLogin()" expand="full" type="submit">Iniciar sesión</ion-button>
   </form>
-  <p>¿Olvidaste la contraseña? <a >Pulsa aqui</a></p>
+  <p>¿Olvidaste la contraseña?  <a >Pulsa aqui</a></p>
   <p>¿Todavía no te has registrado? <a (click)="isLoginView = false">Regístrate aquí</a></p>
 </div>
 
@@ -56,6 +56,6 @@
 <ion-button expand="full" type="submit">Registrarse</ion-button>
 </form>
 
-  
+
   <p>¿Ya tienes una cuenta? <a (click)="isLoginView = true">Inicia sesión aquí</a></p>
-</ng-template>  
+</ng-template>
