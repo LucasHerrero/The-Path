@@ -4,21 +4,33 @@ import { AuthComponent } from './auth.component';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
-
+import { HttpClientModule } from '@angular/common/http';
+import { AppComponent } from '../app.component';
+import { IonicStorageModule } from '@ionic/storage-angular';
 @NgModule({
   declarations: [
-    AuthComponent
+    AuthComponent,
+
+
+
   ],
   imports: [
     CommonModule,
     IonicModule,
     FormsModule,
+    HttpClientModule,
+    IonicStorageModule.forRoot(),
     RouterModule.forChild([
       {
         path: '',
         component: AuthComponent
       }
     ])
-  ]
+  ],
+  providers: [
+
+  ],
+  bootstrap: [AppComponent]
+
 })
 export class AuthModule { }
