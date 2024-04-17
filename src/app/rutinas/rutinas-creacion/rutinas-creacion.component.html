@@ -1,0 +1,71 @@
+<!-- Tengo que ponerle que cuando salga uno que no salga el otro. Una variable boolean que si es false muestre uno y si es true el otro -->
+<!-- <form>
+  <ion-item>
+    <ion-label position="floating">Nombre de la rutina:</ion-label>
+    <ion-input
+      type="text"
+      id="nombreTabla"
+      name="nombreTabla"
+      required
+    ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Grupos Musculares:</ion-label>
+    <ion-input
+      type="text"
+      id="grupoMuscular"
+      name="grupoMuscular"
+      required
+    ></ion-input>
+  </ion-item>
+
+  <ion-item class="">
+    <ion-label>Cantidad de ejercicios:</ion-label>
+    <ion-select id="cantidadEjercicios" name="cantidadEjercicios">
+      <ion-select-option value="1">1</ion-select-option>
+      <ion-select-option value="2">2</ion-select-option>
+      <ion-select-option value="3">3</ion-select-option>
+      <ion-select-option value="4">4</ion-select-option>
+      <ion-select-option value="5">5</ion-select-option>
+      <ion-select-option value="6">6</ion-select-option>
+      <ion-select-option disabled value="none"
+        >¿Quieres mas? Pasate a PRO</ion-select-option
+      >
+    </ion-select>
+  </ion-item>
+
+  <ion-button expand="full" type="submit">Añadir Ejercios</ion-button>
+</form> -->
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button>Cancelar</ion-button>
+    </ion-buttons>
+    <ion-title>Añadir Ejercicios</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>Guardar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-searchbar placeholder="Buscar ejercicios"></ion-searchbar>
+  <ion-row>
+    <ion-col size="6">
+      <ion-button expand="full">Grupos Musculares</ion-button>
+    </ion-col>
+    <ion-col size="6">
+      <ion-button expand="full">Equipamiento</ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-list>
+    <!-- EL ngfor va abajo  -->
+    <ion-item >
+      <ion-label>
+        <h2>ejercicio.titulo </h2>
+        <p>ejercicio.grupoMuscular </p>
+      </ion-label>
+      <ion-button fill="outline" slot="end">Más información</ion-button>
+      <ion-item-divider></ion-item-divider>
+    </ion-item>
+  </ion-list>
+</ion-content>

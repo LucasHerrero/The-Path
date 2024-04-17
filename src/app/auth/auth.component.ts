@@ -11,8 +11,10 @@ import {ToastController} from '@ionic/angular';
 export class AuthComponent {
   emailInic :string = "";
  PassInic : string = "";
-
-  isLoginView = false; //TODO: CAMBIAR A TRUE PARA QUE APAREZCA EL LOGIN
+ nombre : string = "";
+ apellidos : string = "";
+ edad : string = "";
+   isLoginView = false; //TODO: CAMBIAR A TRUE PARA QUE APAREZCA EL LOGIN
 
 constructor ( private authService: AuthService, private Storage : Storage,private toastController: ToastController) {
 
@@ -30,7 +32,7 @@ constructor ( private authService: AuthService, private Storage : Storage,privat
       console.log('Got token', token);
       await this.Storage.set('auth-token', token);
       this.checkStorage();
-      this.presentToast();  
+      this.presentToast();
     } catch (error) {
       console.error('Error during login', error);
     }
@@ -59,4 +61,19 @@ constructor ( private authService: AuthService, private Storage : Storage,privat
     });
     toast.present();
   }
+
+  async registerForm() {
+
+    const date = new Date(this.edad);
+    if (isNaN(date.getTime())) {
+      console.error('Invalid date', this.edad);
+      return;
+    }
+
+    const formattedAge = date.toISOString().slice(0, 10);
+    console.log('Formatted age', formattedAge);
+
+
 }
+}
+

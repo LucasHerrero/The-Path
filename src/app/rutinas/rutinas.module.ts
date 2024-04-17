@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { RutinasComponent } from './rutinas.component';
-
+import { RutinasCreacionComponent } from './rutinas-creacion/rutinas-creacion.component';
 @NgModule({
-  declarations: [RutinasComponent],
+  declarations: [RutinasComponent,
+    RutinasCreacionComponent
+  ],
   imports: [
     CommonModule,
     IonicModule,
