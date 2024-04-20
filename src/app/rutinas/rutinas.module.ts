@@ -6,7 +6,8 @@ import { RutinasComponent } from './rutinas.component';
 import { RutinasCreacionComponent } from './rutinas-creacion/rutinas-creacion.component';
 @NgModule({
   declarations: [RutinasComponent,
-    RutinasCreacionComponent
+    RutinasCreacionComponent,
+
   ],
   imports: [
     CommonModule,
@@ -17,6 +18,7 @@ import { RutinasCreacionComponent } from './rutinas-creacion/rutinas-creacion.co
         component: RutinasComponent
       }
     ])
-  ]
+  ],
+
 })
 export class RutinasModule { }

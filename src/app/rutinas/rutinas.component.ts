@@ -13,10 +13,10 @@ export class RutinasComponent  {
 
   async openModal() {
     const modal = await this.modalController.create({
-      component: RutinasCreacionComponent,  // replace with the component you want to display in the modal
-      cssClass: 'my-custom-class'
+      component: RutinasCreacionComponent
+
     });
     return await modal.present();
   }
-
+ 
 }

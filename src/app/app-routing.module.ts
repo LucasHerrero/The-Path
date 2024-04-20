@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-
+import { MasinfoComponent } from './rutinas/rutinas-creacion/masinfo/masinfo.component';
 const routes: Routes = [
   {
     path: 'home',
@@ -8,12 +8,13 @@ const routes: Routes = [
   },
   {
     path: 'rutinas',
-    loadChildren: () => import('./rutinas/rutinas.module').then( m => m.RutinasModule)  
+    loadChildren: () => import('./rutinas/rutinas.module').then( m => m.RutinasModule)
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then( m => m.AuthModule)  
+    loadChildren: () => import('./auth/auth.module').then( m => m.AuthModule)
   },
+  { path: 'masinfo/:id', component: MasinfoComponent },
   {
     path: '',
     redirectTo: 'home',

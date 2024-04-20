@@ -1,6 +1,31 @@
-<div class="button-div">
-  <ion-button (click)="openModal()">
-    <ion-icon name="add"> </ion-icon>
-    Crea tu rutinas
-  </ion-button>
+<div class="rutinas">
+  <div>
+    <ion-item>
+      <ion-label position="stacked">Nombre de tu rutina</ion-label>
+      <ion-input placeholder="Ingresa el nombre aquí"></ion-input>
+    </ion-item>
+    <div class="select">
+      <ion-item>
+        <ion-label position="floating">Cantidad de ejercicios:</ion-label>
+        <ion-select id="cantidadEjercicios" name="cantidadEjercicios">
+          <ion-select-option value="1">1</ion-select-option>
+          <ion-select-option value="2">2</ion-select-option>
+          <ion-select-option value="3">3</ion-select-option>
+          <ion-select-option value="4">4</ion-select-option>
+          <ion-select-option value="5">5</ion-select-option>
+          <ion-select-option value="6">6</ion-select-option>
+          <ion-select-option disabled value="none"
+            >¿Quieres mas? Pasate a PRO</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+    </div>
+  </div>
+
+  <div class="button-div">
+    <ion-button (click)="openModal()">
+      <ion-icon name="add"> </ion-icon>
+      Crea tu rutinas
+    </ion-button>
+  </div>
 </div>

@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="volver()">
+      <ion-back-button defaultHref="/rutinas"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Más información</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>
+        <h2>{{ ejercicio.nombre }}</h2>
+        <p>{{ ejercicio.musculo }}, {{ ejercicio.dificultad }}</p>
+        <!-- Muestra más detalles del ejercicio aquí -->
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,45 +1,10 @@
-<!-- Tengo que ponerle que cuando salga uno que no salga el otro. Una variable boolean que si es false muestre uno y si es true el otro -->
-<!-- <form>
-  <ion-item>
-    <ion-label position="floating">Nombre de la rutina:</ion-label>
-    <ion-input
-      type="text"
-      id="nombreTabla"
-      name="nombreTabla"
-      required
-    ></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Grupos Musculares:</ion-label>
-    <ion-input
-      type="text"
-      id="grupoMuscular"
-      name="grupoMuscular"
-      required
-    ></ion-input>
-  </ion-item>
 
-  <ion-item class="">
-    <ion-label>Cantidad de ejercicios:</ion-label>
-    <ion-select id="cantidadEjercicios" name="cantidadEjercicios">
-      <ion-select-option value="1">1</ion-select-option>
-      <ion-select-option value="2">2</ion-select-option>
-      <ion-select-option value="3">3</ion-select-option>
-      <ion-select-option value="4">4</ion-select-option>
-      <ion-select-option value="5">5</ion-select-option>
-      <ion-select-option value="6">6</ion-select-option>
-      <ion-select-option disabled value="none"
-        >¿Quieres mas? Pasate a PRO</ion-select-option
-      >
-    </ion-select>
-  </ion-item>
 
-  <ion-button expand="full" type="submit">Añadir Ejercios</ion-button>
-</form> -->
+
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button>Cancelar</ion-button>
+      <ion-button (click)="closeModal()">Cancelar</ion-button>
     </ion-buttons>
     <ion-title>Añadir Ejercicios</ion-title>
     <ion-buttons slot="end">
@@ -48,24 +13,43 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-searchbar placeholder="Buscar ejercicios"></ion-searchbar>
+  <ion-searchbar
+  (ionInput)="filterlist($event)"
+  placeholder="Buscar ejercicios"></ion-searchbar>
   <ion-row>
     <ion-col size="6">
-      <ion-button expand="full">Grupos Musculares</ion-button>
+    <ion-button expand="full" (click)="showMuscleGroups = !showMuscleGroups">Grupos Musculares</ion-button>
+    <ion-select *ngIf="showMuscleGroups" (ionChange)="filterMuscle($event)">
+      <ion-select-option value="">Todos</ion-select-option>
+        <ion-select-option value="pecho">Pecho</ion-select-option>
+        <ion-select-option value="espalda">Espalda</ion-select-option>
+        <ion-select-option value="hombros">Hombros</ion-select-option>
+        <ion-select-option value="biceps">Bíceps</ion-select-option>
+        <ion-select-option value="cuadriceps">Cuádriceps</ion-select-option>
+        <ion-select-option value="triceps">Tríceps</ion-select-option>
+        <ion-select-option value="isquiotibiales">Isquiotibiales</ion-select-option>
+        <ion-select-option value="deltoides">Deltoides</ion-select-option>
+        <ion-select-option value="gemelos">Gemelos</ion-select-option>
+        <ion-select-option value="gluteos">Glúteos</ion-select-option>
+    </ion-select>
     </ion-col>
     <ion-col size="6">
-      <ion-button expand="full">Equipamiento</ion-button>
-    </ion-col>
+      <ion-button expand="full" (click)="showEquipment = !showEquipment">Equipamiento</ion-button>
+      <ion-select *ngIf="showEquipment" (ionChange)="filterEquipment($event)">
+        <ion-select-option value="barra">Barra</ion-select-option>
+        <ion-select-option value="maquina">Máquina</ion-select-option>
+        <ion-select-option value="mancuerna">Mancuerna</ion-select-option>
+      </ion-select>    </ion-col>
   </ion-row>
   <ion-list>
     <!-- EL ngfor va abajo  -->
-    <ion-item >
+
+  <ion-item *ngFor="let ejercicio of Ejercicio">
       <ion-label>
-        <h2>ejercicio.titulo </h2>
-        <p>ejercicio.grupoMuscular </p>
+        <h2>{{ejercicio.nombre }}</h2>
+        <p>{{ejercicio.musculo}},{{ejercicio.dificultad}} </p>
       </ion-label>
-      <ion-button fill="outline" slot="end">Más información</ion-button>
-      <ion-item-divider></ion-item-divider>
+      <ion-button fill="outline" slot="end" (click)="verMas(ejercicio)">Más información</ion-button>
     </ion-item>
   </ion-list>
 </ion-content>
