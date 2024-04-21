@@ -1,6 +1,3 @@
-
-
-
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -14,42 +11,70 @@
 </ion-header>
 <ion-content>
   <ion-searchbar
-  (ionInput)="filterlist($event)"
-  placeholder="Buscar ejercicios"></ion-searchbar>
+    (ionInput)="filterlist($event)"
+    placeholder="Buscar ejercicios"
+  ></ion-searchbar>
   <ion-row>
     <ion-col size="6">
-    <ion-button expand="full" (click)="showMuscleGroups = !showMuscleGroups">Grupos Musculares</ion-button>
-    <ion-select *ngIf="showMuscleGroups" (ionChange)="filterMuscle($event)">
-      <ion-select-option value="">Todos</ion-select-option>
+      <ion-button expand="full" (click)="showMuscleGroups = !showMuscleGroups"
+        >Grupos Musculares</ion-button
+      >
+      <ion-select *ngIf="showMuscleGroups" (ionChange)="filterMuscle($event)">
+        <ion-select-option value="">Todos</ion-select-option>
         <ion-select-option value="pecho">Pecho</ion-select-option>
         <ion-select-option value="espalda">Espalda</ion-select-option>
         <ion-select-option value="hombros">Hombros</ion-select-option>
         <ion-select-option value="biceps">Bíceps</ion-select-option>
         <ion-select-option value="cuadriceps">Cuádriceps</ion-select-option>
         <ion-select-option value="triceps">Tríceps</ion-select-option>
-        <ion-select-option value="isquiotibiales">Isquiotibiales</ion-select-option>
+        <ion-select-option value="isquiotibiales"
+          >Isquiotibiales</ion-select-option
+        >
         <ion-select-option value="deltoides">Deltoides</ion-select-option>
         <ion-select-option value="gemelos">Gemelos</ion-select-option>
         <ion-select-option value="gluteos">Glúteos</ion-select-option>
-    </ion-select>
+      </ion-select>
     </ion-col>
     <ion-col size="6">
-      <ion-button expand="full" (click)="showEquipment = !showEquipment">Equipamiento</ion-button>
+      <ion-button expand="full" (click)="showEquipment = !showEquipment"
+        >Equipamiento</ion-button
+      >
       <ion-select *ngIf="showEquipment" (ionChange)="filterEquipment($event)">
         <ion-select-option value="barra">Barra</ion-select-option>
         <ion-select-option value="maquina">Máquina</ion-select-option>
         <ion-select-option value="mancuerna">Mancuerna</ion-select-option>
-      </ion-select>    </ion-col>
+      </ion-select>
+    </ion-col>
   </ion-row>
   <ion-list>
     <!-- EL ngfor va abajo  -->
 
-  <ion-item *ngFor="let ejercicio of Ejercicio">
-      <ion-label>
-        <h2>{{ejercicio.nombre }}</h2>
-        <p>{{ejercicio.musculo}},{{ejercicio.dificultad}} </p>
-      </ion-label>
-      <ion-button fill="outline" slot="end" (click)="verMas(ejercicio)">Más información</ion-button>
+    <ion-item
+      *ngFor="let ejercicio of Ejercicio"
+      (click)="seleccionarEjercicio(ejercicio)"
+    >
+      <div
+        *ngIf="isSelected(ejercicio)"
+        style="
+          border-radius: 2px;
+          border-left: 5px solid #3880ff;
+          padding-left: 10px;
+        "
+      >
+        <ion-label>
+          <h2>{{ ejercicio.nombre }}</h2>
+          <p>{{ ejercicio.musculo }},{{ ejercicio.dificultad }}</p>
+        </ion-label>
+      </div>
+      <div *ngIf="!isSelected(ejercicio)">
+        <ion-label>
+          <h2>{{ ejercicio.nombre }}</h2>
+          <p>{{ ejercicio.musculo }},{{ ejercicio.dificultad }}</p>
+        </ion-label>
+      </div>
+      <ion-button fill="outline" slot="end" (click)="verMas(ejercicio)"
+        >Más información</ion-button
+      >
     </ion-item>
   </ion-list>
 </ion-content>

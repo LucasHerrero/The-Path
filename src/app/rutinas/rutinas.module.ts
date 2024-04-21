@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { RutinasComponent } from './rutinas.component';
 import { RutinasCreacionComponent } from './rutinas-creacion/rutinas-creacion.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [RutinasComponent,
     RutinasCreacionComponent,
@@ -12,6 +13,8 @@ import { RutinasCreacionComponent } from './rutinas-creacion/rutinas-creacion.co
   imports: [
     CommonModule,
     IonicModule,
+    FormsModule,
+
     RouterModule.forChild([
       {
         path: '',

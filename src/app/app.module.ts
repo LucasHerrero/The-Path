@@ -9,12 +9,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { MasinfoComponent } from './rutinas/rutinas-creacion/masinfo/masinfo.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [AppComponent,
-    MasinfoComponent
+    MasinfoComponent,
+
   ],
   imports: [BrowserModule,
     HttpClientModule,
+    FormsModule,
+
     IonicStorageModule.forRoot(),
      IonicModule.forRoot(), AppRoutingModule
   ],
