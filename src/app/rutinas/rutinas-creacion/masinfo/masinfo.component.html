@@ -1,20 +1,15 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start" (click)="volver()">
-      <ion-back-button defaultHref="/rutinas"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Más información</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <ion-list>
-    <ion-item>
-      <ion-label>
-        <h2>{{ ejercicio.nombre }}</h2>
-        <p>{{ ejercicio.musculo }}, {{ ejercicio.dificultad }}</p>
-        <!-- Muestra más detalles del ejercicio aquí -->
-      </ion-label>
-    </ion-item>
-  </ion-list>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ ejercicio.nombre }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p><strong>Músculo:</strong> {{ ejercicio.musculo }}</p>
+      <p><strong>Equipación:</strong> {{ ejercicio.equipacion }}</p>
+      <p><strong>Dificultad:</strong> {{ ejercicio.dificultad }}</p>
+      <p><strong>Instrucciones:</strong> {{ ejercicio.instrucciones }}</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+

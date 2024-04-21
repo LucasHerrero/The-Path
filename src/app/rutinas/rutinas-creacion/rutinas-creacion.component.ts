@@ -2,8 +2,10 @@ import { Ejercicios } from './../Ejercicios';
 import { RutinasCreacionService } from './rutinas-creacion.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController,AlertController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
+import { MasinfoComponent } from './masinfo/masinfo.component';
+
 
 @Component({
   selector: 'app-rutinas-creacion',
@@ -52,13 +54,20 @@ export class RutinasCreacionComponent implements OnInit {
     console.log(this.nombreRutina);
     console.log(this.cantidadEjercicios);
   }
-  verMas(ejercicio: Ejercicios) {
 
+  async verMas(ejercicio: Ejercicios, event: Event) {
+    event.stopPropagation();
 
-    this.closeModal();
-    this.router.navigate(['/masinfo', ejercicio.id]);
-    console.log(ejercicio);
+    const modal = await this.modalController.create({
+  component: MasinfoComponent,
+  componentProps: {
+    'ejercicio': ejercicio
   }
+});
+
+    return await modal.present();
+  }
+
 
   async closeModal() {
     return await this.modalController.dismiss();
@@ -108,7 +117,7 @@ export class RutinasCreacionComponent implements OnInit {
   }
 
   seleccionarEjercicio(ejercicio: Ejercicios) {
-    console.log("entro a seleccionar ejercicio");
+    console.log('entro a seleccionar ejercicio');
     if (ejercicio) {
       if (this.ejerciciosSeleccionados.includes(ejercicio)) {
         this.ejerciciosSeleccionados = this.ejerciciosSeleccionados.filter(
