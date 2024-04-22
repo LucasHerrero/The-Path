@@ -16,34 +16,10 @@
   ></ion-searchbar>
   <ion-row>
     <ion-col size="6">
-      <ion-button expand="full" (click)="showMuscleGroups = !showMuscleGroups"
-        >Grupos Musculares</ion-button
-      >
-      <ion-select *ngIf="showMuscleGroups" (ionChange)="filterMuscle($event)">
-        <ion-select-option value="">Todos</ion-select-option>
-        <ion-select-option value="pecho">Pecho</ion-select-option>
-        <ion-select-option value="espalda">Espalda</ion-select-option>
-        <ion-select-option value="hombros">Hombros</ion-select-option>
-        <ion-select-option value="biceps">Bíceps</ion-select-option>
-        <ion-select-option value="cuadriceps">Cuádriceps</ion-select-option>
-        <ion-select-option value="triceps">Tríceps</ion-select-option>
-        <ion-select-option value="isquiotibiales"
-          >Isquiotibiales</ion-select-option
-        >
-        <ion-select-option value="deltoides">Deltoides</ion-select-option>
-        <ion-select-option value="gemelos">Gemelos</ion-select-option>
-        <ion-select-option value="gluteos">Glúteos</ion-select-option>
-      </ion-select>
+      <ion-button expand="full" (click)="presentActionSheet()">Grupos Musculares</ion-button>
     </ion-col>
     <ion-col size="6">
-      <ion-button expand="full" (click)="showEquipment = !showEquipment"
-        >Equipamiento</ion-button
-      >
-      <ion-select *ngIf="showEquipment" (ionChange)="filterEquipment($event)">
-        <ion-select-option value="barra">Barra</ion-select-option>
-        <ion-select-option value="maquina">Máquina</ion-select-option>
-        <ion-select-option value="mancuerna">Mancuerna</ion-select-option>
-      </ion-select>
+      <ion-button expand="full" (click)="presentEquipmentActionSheet()">Equipamiento</ion-button>
     </ion-col>
   </ion-row>
   <ion-list>

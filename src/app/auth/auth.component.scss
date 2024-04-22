@@ -1,0 +1,32 @@
+h2 {
+  text-align: center;
+  color: #A1EF00;
+  font-size: 2.0rem;
+  text-shadow: 4px 4px 4px #000000;
+}
+
+ion-button {
+  border-radius: 20px;
+  margin-top: 10px;
+}
+
+
+ion-item {
+  margin: 10px;
+  border-radius: 5px;
+  max-height: fit-content;
+  border: 2px solid #A1EF00;
+  background-color: #000000;
+  ion-label {
+    font-size: 1.1rem;
+
+  }
+  ion-input {
+    font-size: 1.1rem;
+    
+  }
+
+}
+
+
+

@@ -24,3 +24,33 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+
+body {
+  background-color: #242424;
+  color: #ffffff;
+}
+
+ion-button {
+  --background: #9fef00c5;
+  --color: #ffffff;
+}
+
+
+.login-register-page {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  text-align: start;
+  height: 100vh;
+  background: url('/assets/images/Login.webp');
+    background-size: cover;
+
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+
+
+}

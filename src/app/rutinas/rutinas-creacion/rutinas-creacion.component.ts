@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ModalController, AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { MasinfoComponent } from './masinfo/masinfo.component';
-
+import { ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'app-rutinas-creacion',
@@ -26,7 +26,8 @@ export class RutinasCreacionComponent implements OnInit {
     private rutinasCreacionService: RutinasCreacionService,
     private router: Router,
     private storage: Storage,
-    private alertController: AlertController
+    private alertController: AlertController,
+    public actionSheetController: ActionSheetController
   ) {
     this.guardarDatos();
   }
@@ -35,6 +36,87 @@ export class RutinasCreacionComponent implements OnInit {
     this.rutinasCreacionService.getEjercicios().subscribe((data) => {
       this.Ejercicio = data;
     });
+  }
+
+  async presentEquipmentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Equipamiento',
+      buttons: [
+        { text: 'Todos', handler: () => this.filterEquipment('') },
+        { text: 'Barra', handler: () => this.filterEquipment('Barra') },
+        {
+          text: 'Mancuernas',
+          handler: () => this.filterEquipment('Mancuerna'),
+        },
+        { text: 'Máquina', handler: () => this.filterEquipment('Máquina') },
+      ],
+    });
+
+    await actionSheet.present();
+  }
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Grupos Musculares',
+
+      buttons: [
+        {
+          text: 'Todos',
+          handler: () => {
+            this.rutinasCreacionService.getEjercicios().subscribe((data) => {
+              this.Ejercicio = data;
+            });
+          },
+        },
+        {
+          text: 'Pecho',
+          handler: () => {
+            this.filterMuscle('Pecho');
+          },
+        },
+        {
+          text: 'Espalda',
+          handler: () => {
+            this.filterMuscle('Espalda');
+          },
+        },
+        {
+          text: 'Piernas',
+          handler: () => {
+            this.filterMuscle('Piernas');
+          },
+        },
+        {
+          text: 'Hombros',
+          handler: () => {
+            this.filterMuscle('Hombros');
+          },
+        },
+        {
+          text: 'Brazos',
+          handler: () => {
+            this.filterMuscle('Brazos');
+          },
+        },
+        {
+          text: 'Glúteos',
+          handler: () => {
+            this.filterMuscle('Glúteos');
+          },
+        },
+        {
+          text: 'Abdominales',
+          handler: () => {
+            this.filterMuscle('Abdominales');
+          },
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+      ],
+    });
+    await actionSheet.present();
   }
 
   async mostrarAlerta() {
@@ -59,22 +141,20 @@ export class RutinasCreacionComponent implements OnInit {
     event.stopPropagation();
 
     const modal = await this.modalController.create({
-  component: MasinfoComponent,
-  componentProps: {
-    'ejercicio': ejercicio
-  }
-});
+      component: MasinfoComponent,
+      componentProps: {
+        ejercicio: ejercicio,
+      },
+    });
 
     return await modal.present();
   }
-
 
   async closeModal() {
     return await this.modalController.dismiss();
   }
 
   filterMuscle(evt: any) {
-    evt = evt.target.value;
     console.log(evt);
 
     this.rutinasCreacionService
@@ -86,7 +166,6 @@ export class RutinasCreacionComponent implements OnInit {
   }
 
   filterEquipment(evt: any) {
-    evt = evt.target.value;
     console.log(evt);
 
     this.rutinasCreacionService
