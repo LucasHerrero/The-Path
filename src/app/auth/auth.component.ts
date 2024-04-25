@@ -2,23 +2,32 @@ import { ConstantPool } from '@angular/compiler';
 import { AuthService } from './Auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import {ToastController} from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent {
-  emailInic :string = "";
- PassInic : string = "";
- nombre : string = "";
- apellidos : string = "";
- edad : string = "";
-   isLoginView = false; //TODO: CAMBIAR A TRUE PARA QUE APAREZCA EL LOGIN
+  emailInic: string = '';
+  PassInic: string = '';
+  username : string = '';
+  edad: string = '';
+  email: string = '';
+  Pass: string = '';
+  Pass2: string = '';
+  height: string = '';
+  kg: string = '';
 
-constructor ( private authService: AuthService, private Storage : Storage,private toastController: ToastController) {
 
- this.init();
+  isLoginView = false; //TODO: CAMBIAR A TRUE PARA QUE APAREZCA EL LOGIN
+
+  constructor(
+    private authService: AuthService,
+    private Storage: Storage,
+    private toastController: ToastController
+  ) {
+    this.init();
   }
 
   async init() {
@@ -56,24 +65,27 @@ constructor ( private authService: AuthService, private Storage : Storage,privat
         {
           side: 'start',
           icon: 'checkmark',
-        }
-      ]
+        },
+      ],
     });
     toast.present();
   }
 
-  async registerForm() {
+  async registerUser() {
+    const user = {
+      username: this.username,
+      password: this.Pass,
+      email: this.email,
+      birthday: this.edad,
+      height: this.height,
+      kg: this.kg,
+    };
 
-    const date = new Date(this.edad);
-    if (isNaN(date.getTime())) {
-      console.error('Invalid date', this.edad);
-      return;
-    }
-
-    const formattedAge = date.toISOString().slice(0, 10);
-    console.log('Formatted age', formattedAge);
-
-
+    this.authService.register(user).then((response) => {
+      console.log('Got token', response);
+      this.Storage.set('auth-token', response);
+      this.checkStorage();
+      this.presentToast();
+    });
+  }
 }
-}
-

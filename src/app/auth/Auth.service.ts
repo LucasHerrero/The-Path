@@ -24,16 +24,9 @@ login(email: string, password: string): Promise<string> {
   });
 }
 
-register(nombre : string, apellidos :string, edad : string, email : string, password : string): Promise<string> {
-  const resp = {
-    nombre: nombre,
-    apellidos: apellidos,
-    edad: edad,
-    email: email,
-    password: password
-  };
+register(data : any): Promise<string> {
 
-  return this.http.post<{ token: string }>(`${environment.apiUrl}/register`, resp).toPromise().then(response => {
+  return this.http.post<{ token: string }>(`${environment.apiUrl}/register`, data).toPromise().then(response => {
     if (response && typeof response.token === 'string') {
       return response.token;
     } else {

@@ -17,16 +17,23 @@ ion-item {
   max-height: fit-content;
   border: 2px solid #A1EF00;
   background-color: #000000;
-  ion-label {
-    font-size: 1.1rem;
 
-  }
+   .Fecha{
+font-size: 0.65rem;
+
+  --padding-end: 25px;
+   }
+
   ion-input {
-    font-size: 1.1rem;
-    
+    font-size: 0.7rem;
+    padding: 0;
+    font-weight: bold;
+margin: 0px 20px;
   }
 
 }
+
+
 
 
 

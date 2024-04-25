@@ -39,40 +39,75 @@
 
   <ng-template #registrationTemplate>
     <h2>Registro</h2>
-    <form>
-      <ion-item>
-        <ion-label position="floating">Nombre</ion-label>
-        <ion-input type="text" required></ion-input>
+    <form #registerForm="ngForm">
+      <ion-item >
+        <ion-input
+        class="Fecha"
+          name="edad"
+          label="Fecha de nacimiento"
+          [(ngModel)]="edad"
+          type="date"
+          required
+        ></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label position="floating">Apellidos</ion-label>
-        <ion-input type="text" required></ion-input>
+        <ion-input
+          class="small-label"
+          name="height"
+          label="Altura (cm)"
+          [(ngModel)]="height"
+          type="number"
+          required
+        ></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Edad</ion-label>
-        <ion-input type="date" required></ion-input>
+        <ion-input
+          class="small-label"
+          name="kg"
+          label="Peso (kg)"
+          [(ngModel)]="kg"
+          type="number"
+          required
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          name="username"
+          label="Nombre de usuario"
+          [(ngModel)]="username"
+          type="text"
+          required
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          name="email"
+          label="Correo electrónico"
+          [(ngModel)]="email"
+          type="email"
+          required
+        ></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label position="floating">Correo electrónico</ion-label>
-        <ion-input type="email" required></ion-input>
+        <ion-input
+          name="password"
+          label="Contraseña"
+          [(ngModel)]="Pass"
+          type="password"
+          required
+        ></ion-input>
       </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Contraseña</ion-label>
-        <ion-input type="password" required></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Repetir contraseña</ion-label>
-        <ion-input type="password" required></ion-input>
-      </ion-item>
-
-      <ion-button expand="full" type="submit" (click)="registerForm()"
-        >Registrarse</ion-button
+      <ion-button
+        [disabled]="!registerForm.form.valid"
+        (click)="registerUser()"
+        expand="full"
+        type="submit"
       >
+        Registrarse
+      </ion-button>
     </form>
 
     <p>
