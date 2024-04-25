@@ -38,9 +38,6 @@ cantidadEjercicios: number = 0;
   }
 
 async guardarDatos(){
-
-
-
   await this.storage.set('nombreRutina', this.nombreRutina);
     await this.storage.set('cantidadEjercicios', this.cantidadEjercicios);
 }

@@ -210,9 +210,20 @@ export class RutinasCreacionComponent implements OnInit {
         }
       }
     }
+    console.log(this.ejerciciosSeleccionados);
   }
 
   isSelected(ejercicio: Ejercicios) {
     return this.ejerciciosSeleccionados.includes(ejercicio);
   }
+
+  async guardarRutina() {
+    const data = {
+      nombre: this.nombreRutina,
+      cantidadEj: this.cantidadEjercicios,
+      userFk: 1
+    };
+    console.log(data);
+  }
+
 }

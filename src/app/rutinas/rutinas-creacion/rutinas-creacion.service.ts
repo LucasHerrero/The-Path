@@ -25,6 +25,10 @@ export class RutinasCreacionService {
   getEjerciciosbySearchEquipment(search: string) {
     return this.http.get<Ejercicios[]>(this.url+`/search?equipacion=${search}`);
   }
+
+  postRutina(data :any) {
+    return this.http.post(this.url+`/rutina/new`,data);
+  }
 }
 
 

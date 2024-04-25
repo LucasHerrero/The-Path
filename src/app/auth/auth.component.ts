@@ -33,6 +33,7 @@ export class AuthComponent {
   async init() {
     const storage = await this.Storage.create();
     this.Storage = storage;
+    this.checkStorage();
   }
 
   async formInfoLogin() {
