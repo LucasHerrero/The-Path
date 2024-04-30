@@ -54,3 +54,12 @@ ion-button {
 
 
 }
+
+.modal {
+  --height: 50vh;
+  --max-height: 90vh;
+  --min-height: 50vh;
+  --initial-breakpoint: 0.5;
+  --final-breakpoint: 1;
+}
+

@@ -24,10 +24,15 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'tus-rutinas',
+    loadChildren: () => import('./tus-rutinas/tus-rutinas.module').then( m => m.TusRutinasPageModule)
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
   },
+
 ];
 
 @NgModule({

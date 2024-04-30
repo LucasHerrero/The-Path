@@ -2,6 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Storage } from '@ionic/storage-angular';
+import { jwtDecode } from 'jwt-decode';
+import { IntJwtPayload}  from './IntJwtPayload';
+import { Observable } from 'rxjs';
+
+
 @Injectable({
   providedIn: 'root',
 })
@@ -46,7 +51,21 @@ export class AuthService {
 
   async isAuthenticated(): Promise<boolean> {
     const token = await this.Storage.get('auth-token');
-
+    console.log('token', token);
     return !!token;
   }
+
+
+  //CREAR INTERFAZ PARA EL TOKEN.
+  async decodeToken(): Promise<IntJwtPayload>{
+    const token = await this.Storage.get('auth-token');
+
+    const decodedToken : IntJwtPayload= jwtDecode(token);
+    console.log('decodedtoken',decodedToken);
+
+    return decodedToken;
+  }
 }
+
+
+

@@ -1,10 +1,11 @@
-import { Ejercicios } from "./Ejercicios";
-import { Rutina } from "./Rutina";
-
+import { Rutina } from './Rutina';
+import { Ejercicios } from './Ejercicios';
 export interface RutinaEjercicio {
-  id:          number;
-  idRutina:    number;
+  id: number;
+  idRutina: number;
   idEjercicio: number;
-  Rutina:      Rutina;
-  Ejercicio:   Ejercicios;
+  Rutina: Rutina;
+  Ejercicio: Ejercicios;
 }
+
+

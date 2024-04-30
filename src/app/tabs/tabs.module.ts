@@ -8,14 +8,24 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([
       {
         path: 'home',
-        loadChildren: () => import('../home/home.module').then(m => m.HomeModule)
+        loadChildren: () =>
+          import('../home/home.module').then((m) => m.HomeModule),
       },
       {
         path: 'rutinas',
-        loadChildren: () => import('../rutinas/rutinas.module').then(m => m.RutinasModule)
+        loadChildren: () =>
+          import('../rutinas/rutinas.module').then((m) => m.RutinasModule),
+      },
+      {
+        path: 'auth',
+        loadChildren: () =>
+          import('../auth/auth.module').then((m) => m.AuthModule),
+      },
+      {
+        path: 'tus-rutinas',
+        loadChildren: () => import('../tus-rutinas/tus-rutinas.module').then(m => m.TusRutinasPageModule)
       }
-
-    ])
-  ]
+    ]),
+  ],
 })
-export class TabsModule { }
+export class TabsModule {}

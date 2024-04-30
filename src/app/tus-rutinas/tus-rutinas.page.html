@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Tus Rutinas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content *ngIf="!isAuthenticatedVar">
+  <ion-button (click)="logeate()" expand="block" fill="clear" shape="round">
+    Logeate
+  </ion-button>
+</ion-content>
+
+<ion-content *ngIf="isAuthenticatedVar" [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">TusRutinas</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+ <ion-card *ngFor="let Rutina of RutinaEjercicio">
+    <ion-card-header>
+      <ion-card-title>{{Rutina.Rutina.nombre}}</ion-card-title>
+    </ion-card-header >
+    <ion-card-content >
+      <h2 style="font-weight: bolder; font-size: 1.1rem;">{{Rutina.Ejercicio.nombre}}</h2>
+      <p>{{Rutina.Ejercicio.instrucciones}}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

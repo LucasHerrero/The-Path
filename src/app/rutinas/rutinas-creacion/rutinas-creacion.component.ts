@@ -145,6 +145,8 @@ export class RutinasCreacionComponent implements OnInit {
       componentProps: {
         ejercicio: ejercicio,
       },
+      cssClass: 'modal',
+      presentingElement: await this.modalController.getTop()
     });
 
     return await modal.present();

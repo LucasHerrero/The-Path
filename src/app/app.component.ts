@@ -7,12 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-showTab = true;
+showTab = false;
 
   constructor( ) {}
 
   async ngOnInit() {
-
+    
 
   }
 }
