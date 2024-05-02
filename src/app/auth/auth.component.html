@@ -1,118 +1,177 @@
-<div class="login-register-page">
+<div>
   <div *ngIf="isLoginView; else registrationTemplate">
-    <h2>Iniciar sesión</h2>
+    <ion-toolbar>
+      <ion-title>The Path</ion-title>
+    </ion-toolbar>
+    <div class="contenedor-padre">
+      <div class="imgBack2"></div>
+      <div class="Login">
+        <!-- Formulario de inicio de sesión aquí -->
+        <form [formGroup]="loginForm">
+          <ion-item>
+            <ion-label position="floating">Correo electrónico</ion-label>
+            <ion-input formControlName="email"
+            [(ngModel)]="email"
+            type="email"></ion-input>
+          </ion-item>
+          <ion-note
+            *ngIf="
+              loginForm.controls.email.invalid &&
+              loginForm.controls.email.touched
+            "
+          >
+            El correo electrónico es obligatorio y debe ser de tipo email.
+          </ion-note>
 
-    <!-- Formulario de inicio de sesión aquí -->
-    <form>
-      <ion-item>
-        <ion-label position="floating">Correo electrónico</ion-label>
-        <ion-input
-          name="email"
-          aria-label="Correo electrónico"
-          [(ngModel)]="emailInic"
-          type="email"
-          required
-        ></ion-input>
-      </ion-item>
+          <ion-item>
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input
+              formControlName="password"
+              type="password"
+              minlength="8"
+              [(ngModel)]="Pass"
+            ></ion-input>
+          </ion-item>
+          <ion-note
+            *ngIf="
+              loginForm.controls.password.invalid &&
+              loginForm.controls.password.touched
+            "
+          >
+            La contraseña es obligatoria y debe tener al menos 8 caracteres.
+          </ion-note>
 
-      <ion-item>
-        <ion-label position="floating">Contraseña</ion-label>
-        <ion-input
-          name="password"
-          aria-label="Contraseña"
-          [(ngModel)]="PassInic"
-          type="password"
-          required
-        ></ion-input>
-      </ion-item>
+          <ion-button
 
-      <ion-button (click)="formInfoLogin()" expand="full" type="submit"
-        >Iniciar sesión</ion-button
-      >
-    </form>
-    <p>¿Olvidaste la contraseña? <a>Pulsa aqui</a></p>
-    <p>
-      ¿Todavía no te has registrado?
-      <a (click)="isLoginView = false">Regístrate aquí</a>
-    </p>
+          class="btnLogin" [disabled]="loginForm.invalid"
+          type="sumbit"
+          (click)="formInfoLogin()"
+            >Iniciar sesión</ion-button
+          >
+        </form>
+        <ion-button
+          class="btnLogin"
+          expand="full"
+          (click)="isLoginView = false"
+          fill="outline"
+          type="button"
+        >
+          Registrate
+        </ion-button>
+        <p>¿Olvidaste la contraseña? <a>Pulsa aqui</a></p>
+      </div>
+    </div>
   </div>
 
   <ng-template #registrationTemplate>
-    <h2>Registro</h2>
-    <form #registerForm="ngForm">
-      <ion-item >
-        <ion-input
-        class="Fecha"
-          name="edad"
-          label="Fecha de nacimiento"
-          [(ngModel)]="edad"
-          type="date"
-          required
-        ></ion-input>
-      </ion-item>
+    <ion-toolbar>
+      <ion-title>The Path</ion-title>
+    </ion-toolbar>
+    <div class="contenedor-padre">
+      <div class="imgBack"></div>
+      <div class="registro">
+        <form #registerForm="ngForm">
+          <ion-item>
+            <ion-label position="floating">Altura (cm)</ion-label>
+            <ion-input
+              class="small-label"
+              name="height"
+              [(ngModel)]="height"
+              type="number"
+              required
+            ></ion-input>
+          </ion-item>
 
-      <ion-item>
-        <ion-input
-          class="small-label"
-          name="height"
-          label="Altura (cm)"
-          [(ngModel)]="height"
-          type="number"
-          required
-        ></ion-input>
-      </ion-item>
+          <ion-item>
+            <ion-label position="floating">Peso (KG)</ion-label>
+            <ion-input
+              class="small-label"
+              name="kg"
+              [(ngModel)]="kg"
+              type="number"
+              required
+            ></ion-input>
+          </ion-item>
 
-      <ion-item>
-        <ion-input
-          class="small-label"
-          name="kg"
-          label="Peso (kg)"
-          [(ngModel)]="kg"
-          type="number"
-          required
-        ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input
-          name="username"
-          label="Nombre de usuario"
-          [(ngModel)]="username"
-          type="text"
-          required
-        ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input
-          name="email"
-          label="Correo electrónico"
-          [(ngModel)]="email"
-          type="email"
-          required
-        ></ion-input>
-      </ion-item>
+          <ion-item>
+            <ion-label position="floating">Nombre de usuario</ion-label>
 
-      <ion-item>
-        <ion-input
-          name="password"
-          label="Contraseña"
-          [(ngModel)]="Pass"
-          type="password"
-          required
-        ></ion-input>
-      </ion-item>
-      <ion-button
-        [disabled]="!registerForm.form.valid"
-        (click)="registerUser()"
-        expand="full"
-        type="submit"
-      >
-        Registrarse
-      </ion-button>
-    </form>
+            <ion-input
+              name="username"
+              [(ngModel)]="username"
+              type="text"
+              required
+              #usernameCtrl="ngModel"
+            ></ion-input>
+            <ion-note
+              class="error-message"
+              *ngIf="usernameCtrl.invalid && usernameCtrl.touched"
+            >
+              El nombre de usuario es obligatorio.
+            </ion-note>
+          </ion-item>
 
-    <p>
-      ¿Ya tienes una cuenta?
-      <a (click)="isLoginView = true">Inicia sesión aquí</a>
-    </p>
+          <ion-item>
+            <ion-label position="floating">Correo electronico</ion-label>
+
+            <ion-input
+              name="email"
+              [(ngModel)]="email"
+              type="email"
+              required
+              email
+              #emailM="ngModel"
+            ></ion-input>
+            <ion-note
+              class="error-message"
+              *ngIf="emailM.errors && emailM.touched"
+            >
+              <ng-container *ngIf="emailM.errors['required']"
+                >El Correo electronico es obligatorio.</ng-container
+              >
+              <ng-container *ngIf="emailM.errors['email']"
+                >El Correo electronico debe ser un correo valido.</ng-container
+              >
+            </ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Contraseña</ion-label>
+
+            <ion-input
+              name="password"
+              [(ngModel)]="Pass"
+              type="password"
+              required
+              #pass="ngModel"
+              minlength="8"
+            ></ion-input>
+            <ion-note
+              class="error-message"
+              *ngIf="pass.invalid && pass.touched"
+            >
+              La contraseña es obligatoria y debe tener al menos 8 caracteres.
+            </ion-note>
+          </ion-item>
+          <ion-button
+            class="btnLogin"
+            [disabled]="!registerForm.form.valid"
+            (click)="registerUser()"
+            type="submit"
+          >
+            Registrarse
+          </ion-button>
+        </form>
+        <ion-button
+          class="btnLogin"
+          (click)="isLoginView = true"
+          expand="full"
+          fill="outline"
+          type="button"
+        >
+          Inicia Sesion
+        </ion-button>
+      </div>
+    </div>
   </ng-template>
 </div>

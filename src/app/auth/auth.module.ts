@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AuthComponent } from './auth.component';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from '../app.component';
 import { IonicStorageModule } from '@ionic/storage-angular';
@@ -19,6 +19,7 @@ import { IonicStorageModule } from '@ionic/storage-angular';
     IonicModule,
     FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     IonicStorageModule.forRoot(),
     RouterModule.forChild([
       {

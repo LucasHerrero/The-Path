@@ -3,6 +3,8 @@ import { AuthService } from './Auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { Form, FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -11,7 +13,7 @@ import { ToastController } from '@ionic/angular';
 export class AuthComponent {
   emailInic: string = '';
   PassInic: string = '';
-  username : string = '';
+  username: string = '';
   edad: string = '';
   email: string = '';
   Pass: string = '';
@@ -19,34 +21,69 @@ export class AuthComponent {
   height: string = '';
   kg: string = '';
 
-
   isLoginView = false; //TODO: CAMBIAR A TRUE PARA QUE APAREZCA EL LOGIN
 
   constructor(
     private authService: AuthService,
     private Storage: Storage,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private router: Router,
+    private fb: FormBuilder
   ) {
     this.init();
   }
+  loginForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
+  });
+
+  registerForm = this.fb.group({
+    emailM: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(8)]]
+  });
 
   async init() {
     const storage = await this.Storage.create();
     this.Storage = storage;
     this.checkStorage();
   }
+  async presentToastError(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: 'danger',
+      position: 'top',
+      buttons: [
+        {
+          side: 'start',
+          icon: 'close',
+        },
+      ],
 
-  async formInfoLogin() {
-    try {
-      const token = await this.authService.login(this.emailInic, this.PassInic);
-      console.log('Got token', token);
-      await this.Storage.set('auth-token', token);
-      this.checkStorage();
-      this.presentToast();
-    } catch (error) {
-      console.error('Error during login', error);
-    }
+    });
+    toast.present();
   }
+  formInfoLogin() {
+  const user = {
+    email: this.email,
+    password: this.Pass,
+  };
+
+  this.authService.login(user).then((response) => {
+    if (response.success) {
+      console.log('Got token', response.token);
+      this.Storage.set('auth-token', response.token);
+      this.checkStorage();
+      this.router.navigate(['/']);
+      this.presentToast();
+    } else {
+      console.error('Error during login', response.error);
+      this.presentToastError(response.error);
+
+
+    }
+  });
+}
 
   async checkStorage() {
     try {
@@ -77,7 +114,6 @@ export class AuthComponent {
       username: this.username,
       password: this.Pass,
       email: this.email,
-      birthday: this.edad,
       height: this.height,
       kg: this.kg,
     };
@@ -86,6 +122,7 @@ export class AuthComponent {
       console.log('Got token', response);
       this.Storage.set('auth-token', response);
       this.checkStorage();
+      this.router.navigate(['/']);
       this.presentToast();
     });
   }

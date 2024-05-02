@@ -1,39 +1,56 @@
-h2 {
+.contenedor-padre {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; // Asegúrate de que el contenedor padre ocupe toda la altura de la vista
+
+
+}
+
+.registro {
+ flex: 1;
+  min-height: fit-content;
+  margin: 0px 15px;
+}
+
+.btnRegLog{
+
+}
+.Login {
+ flex:1;
+ margin: 0px 15px;
+}
+
+.imgBack {
+  flex: 1;
+  background-size: cover;
+  max-height: 30vh;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0) 50%), url("/assets/images/Login.webp");
+
+
+}
+
+.imgBack2 {
+  flex: 1;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0) 50%), url("/assets/images/Login.webp");
+  background-size: cover;
+
+}
+
+ion-label{
+  font-weight: 600;
+}
+
+ion-title{
   text-align: center;
-  color: #A1EF00;
-  font-size: 2.0rem;
-  text-shadow: 4px 4px 4px #000000;
 }
 
-ion-button {
-  border-radius: 20px;
-  margin-top: 10px;
-}
+form {
+  display: flex;
+  flex-direction: column;
 
-
-ion-item {
-  margin: 10px;
-  border-radius: 5px;
-  max-height: fit-content;
-  border: 2px solid #A1EF00;
-  background-color: #000000;
-
-   .Fecha{
-font-size: 0.65rem;
-
-  --padding-end: 25px;
-   }
-
-  ion-input {
-    font-size: 0.7rem;
-    padding: 0;
-    font-weight: bold;
-margin: 0px 20px;
-  }
 
 }
 
-
-
-
-
+.btnLogin{
+margin-top: 5px;
+}

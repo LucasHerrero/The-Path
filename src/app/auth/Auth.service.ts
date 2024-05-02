@@ -18,23 +18,26 @@ export class AuthService {
   async init() {
     await this.Storage.create();
   }
-  login(email: string, password: string): Promise<string> {
-    const resp = {
-      email: email,
-      password: password,
-    };
+ login(data: any): Promise<any> {
+  const resp = {
+    email: data.email,
+    password: data.password,
+  };
 
-    return this.http
-      .post<{ token: string }>(`${environment.apiUrl}/login`, resp)
-      .toPromise()
-      .then((response) => {
-        if (response && typeof response.token === 'string') {
-          return response.token;
-        } else {
-          throw new Error('Token is not a string');
-        }
-      });
-  }
+  return this.http
+    .post<{ token: string }>(`${environment.apiUrl}/login`, resp)
+    .toPromise()
+    .then((response) => {
+      if (response && typeof response.token === 'string') {
+        return { success: true, token: response.token };
+      } else {
+        return { success: false, error: 'Token is not a string' };
+      }
+    })
+    .catch((error) => {
+      return { success: false, error: error.error };
+    });
+}
 
   register(data: any): Promise<string> {
     return this.http
