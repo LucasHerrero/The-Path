@@ -7,12 +7,12 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomeModule),
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard] EJEMPLO PARA ASEGURAR UNA RUTA.
   },
   {
     path: 'rutinas',
     loadChildren: () => import('./rutinas/rutinas.module').then( m => m.RutinasModule),
-    canActivate: [AuthGuard]
+
   },
   {
     path: 'auth',
@@ -21,7 +21,7 @@ const routes: Routes = [
   {
     path: 'masinfo/:id',
     component: MasinfoComponent,
-    canActivate: [AuthGuard]
+
   },
   {
     path: 'tus-rutinas',
@@ -32,6 +32,7 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+
 
 ];
 

@@ -22,9 +22,9 @@
     <ion-card-header>
       <ion-card-title>{{Rutina.Rutina.nombre}}</ion-card-title>
     </ion-card-header >
-    <ion-card-content >
-      <h2 style="font-weight: bolder; font-size: 1.1rem;">{{Rutina.Ejercicio.nombre}}</h2>
-      <p>{{Rutina.Ejercicio.instrucciones}}</p>
+    <ion-card-content *ngFor="let ejercicio of Rutina.Ejercicios">
+      <h2 style="font-weight: bolder; font-size: 1.1rem;">{{ejercicio.nombre}}</h2>
+      <p>{{ejercicio.instrucciones}}</p>
     </ion-card-content>
   </ion-card>
 </ion-content>

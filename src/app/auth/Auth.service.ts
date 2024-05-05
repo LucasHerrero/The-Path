@@ -68,6 +68,10 @@ export class AuthService {
 
     return decodedToken;
   }
+
+  logout() {
+    this.Storage.remove('auth-token');
+  }
 }
 
 

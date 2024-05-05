@@ -2,12 +2,19 @@
   <div>
     <ion-item>
       <ion-label position="stacked">Nombre de tu rutina</ion-label>
-      <ion-input placeholder="Ingresa el nombre aquí" [(ngModel)]="nombreRutina"></ion-input>
+      <ion-input
+        placeholder="Ingresa el nombre aquí"
+        [(ngModel)]="nombreRutina"
+      ></ion-input>
     </ion-item>
     <div class="select">
       <ion-item>
-        <ion-label position="floating">Cantidad de ejercicios:</ion-label>
-        <ion-select id="cantidadEjercicios" name="cantidadEjercicios" [(ngModel)]="cantidadEjercicios">
+        <ion-select
+          label="Cantidad de ejercicios"
+          id="cantidadEjercicios"
+          name="cantidadEjercicios"
+          [(ngModel)]="cantidadEjercicios"
+        >
           <ion-select-option value="1">1</ion-select-option>
           <ion-select-option value="2">2</ion-select-option>
           <ion-select-option value="3">3</ion-select-option>

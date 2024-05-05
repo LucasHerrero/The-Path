@@ -14,8 +14,6 @@ import { Ejercicios } from '../rutinas/Ejercicios';
 })
 export class TusRutinasPage implements OnInit {
   RutinaEjercicio: RutinaEjercicio[] = [];
-  RutinaEjercicioOrg: RutinaEjercicio[] = [];
-  Ejercicios: Ejercicios[] = [];
   isAuthenticatedVar = false;
   constructor(
     private tusRutinasService: TusRutinasService,
@@ -29,10 +27,13 @@ export class TusRutinasPage implements OnInit {
       if (isAuthenticated) {
         this.isAuthenticatedVar = true;
         this.authService.decodeToken().then((decodedToken: IntJwtPayload) => {
+          console.log('idToken', decodedToken.userId);
+
           this.tusRutinasService
             .getTusRutinas(decodedToken.userId)
             .subscribe((data) => {
               this.RutinaEjercicio = data;
+              console.log('RutinaEjercicio', this.RutinaEjercicio);
             });
         });
       }

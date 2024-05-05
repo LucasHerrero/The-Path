@@ -1,4 +1,7 @@
-<div>
+<div *ngIf="isLoggedIn">
+  <app-profile></app-profile>
+</div>
+<div *ngIf="!isLoggedIn">
   <div *ngIf="isLoginView; else registrationTemplate">
     <ion-toolbar>
       <ion-title>The Path</ion-title>
@@ -10,9 +13,11 @@
         <form [formGroup]="loginForm">
           <ion-item>
             <ion-label position="floating">Correo electrónico</ion-label>
-            <ion-input formControlName="email"
-            [(ngModel)]="email"
-            type="email"></ion-input>
+            <ion-input
+              formControlName="email"
+              [(ngModel)]="email"
+              type="email"
+            ></ion-input>
           </ion-item>
           <ion-note
             *ngIf="
@@ -42,10 +47,10 @@
           </ion-note>
 
           <ion-button
-
-          class="btnLogin" [disabled]="loginForm.invalid"
-          type="sumbit"
-          (click)="formInfoLogin()"
+            class="btnLogin"
+            [disabled]="loginForm.invalid"
+            type="sumbit"
+            (click)="formInfoLogin()"
             >Iniciar sesión</ion-button
           >
         </form>
@@ -58,7 +63,6 @@
         >
           Registrate
         </ion-button>
-        <p>¿Olvidaste la contraseña? <a>Pulsa aqui</a></p>
       </div>
     </div>
   </div>

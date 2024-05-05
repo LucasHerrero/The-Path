@@ -20,7 +20,7 @@ export class AuthComponent {
   Pass2: string = '';
   height: string = '';
   kg: string = '';
-
+  isLoggedIn: boolean = false;
   isLoginView = false; //TODO: CAMBIAR A TRUE PARA QUE APAREZCA EL LOGIN
 
   constructor(
@@ -31,6 +31,7 @@ export class AuthComponent {
     private fb: FormBuilder
   ) {
     this.init();
+    this.isLoggedInFn();
   }
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -39,7 +40,7 @@ export class AuthComponent {
 
   registerForm = this.fb.group({
     emailM: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(8)]]
+    password: ['', [Validators.required, Validators.minLength(8)]],
   });
 
   async init() {
@@ -59,31 +60,29 @@ export class AuthComponent {
           icon: 'close',
         },
       ],
-
     });
     toast.present();
   }
   formInfoLogin() {
-  const user = {
-    email: this.email,
-    password: this.Pass,
-  };
+    const user = {
+      email: this.email,
+      password: this.Pass,
+    };
 
-  this.authService.login(user).then((response) => {
-    if (response.success) {
-      console.log('Got token', response.token);
-      this.Storage.set('auth-token', response.token);
-      this.checkStorage();
-      this.router.navigate(['/']);
-      this.presentToast();
-    } else {
-      console.error('Error during login', response.error);
-      this.presentToastError(response.error);
+    this.authService.login(user).then((response) => {
+      if (response.success) {
+        console.log('Got token', response.token);
+        this.Storage.set('auth-token', response.token);
+        this.checkStorage();
+        location.reload();
 
 
-    }
-  });
-}
+      } else {
+        console.error('Error during login', response.error);
+        this.presentToastError(response.error);
+      }
+    });
+  }
 
   async checkStorage() {
     try {
@@ -93,21 +92,21 @@ export class AuthComponent {
       console.error('Error during checking storage', error);
     }
   }
-  async presentToast() {
-    const toast = await this.toastController.create({
-      message: 'Inicio de sesión exitoso.',
-      duration: 2000,
-      color: 'success',
-      position: 'top',
-      buttons: [
-        {
-          side: 'start',
-          icon: 'checkmark',
-        },
-      ],
-    });
-    toast.present();
-  }
+  // async presentToast() {
+  //   const toast = await this.toastController.create({
+  //     message: 'Inicio de sesión exitoso.',
+  //     duration: 2000,
+  //     color: 'success',
+  //     position: 'top',
+  //     buttons: [
+  //       {
+  //         side: 'start',
+  //         icon: 'checkmark',
+  //       },
+  //     ],
+  //   });
+  //   toast.present();
+  // }
 
   async registerUser() {
     const user = {
@@ -122,8 +121,18 @@ export class AuthComponent {
       console.log('Got token', response);
       this.Storage.set('auth-token', response);
       this.checkStorage();
-      this.router.navigate(['/']);
-      this.presentToast();
+      location.reload();
+
+    });
+  }
+
+  isLoggedInFn() {
+    this.authService.isAuthenticated().then((response) => {
+      if (response === true) {
+        this.isLoggedIn = true;
+      } else {
+        this.isLoggedIn = false;
+      }
     });
   }
 }
