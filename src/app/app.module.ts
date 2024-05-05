@@ -20,7 +20,12 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
 
     IonicStorageModule.forRoot(),
-     IonicModule.forRoot(), AppRoutingModule
+     IonicModule.forRoot(
+    {
+      rippleEffect: false,
+      mode: 'ios'
+    }
+     ), AppRoutingModule
   ],
 
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
