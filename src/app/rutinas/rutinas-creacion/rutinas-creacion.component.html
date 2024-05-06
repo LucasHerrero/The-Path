@@ -22,6 +22,9 @@
       <ion-button expand="full" (click)="presentEquipmentActionSheet()">Equipamiento</ion-button>
     </ion-col>
   </ion-row>
+  <ion-item *ngIf="isLoading">
+    <ion-spinner name="crescent"></ion-spinner>
+  </ion-item>
   <ion-list>
     <!-- EL ngfor va abajo  -->
 

@@ -28,6 +28,8 @@ export class RutinasCreacionComponent implements OnInit {
   nombreRutina: string = '';
   cantidadEjercicios: number = 0;
   user: IntJwtPayload = {} as IntJwtPayload;
+  isLoading = false;
+
   constructor(
     private modalController: ModalController,
     private rutinasCreacionService: RutinasCreacionService,
@@ -42,11 +44,20 @@ export class RutinasCreacionComponent implements OnInit {
     this.datosRutina1();
   }
 
-  ngOnInit() {
-    this.rutinasCreacionService.getEjercicios().subscribe((data) => {
+
+ngOnInit() {
+  this.isLoading = true;
+  this.rutinasCreacionService.getEjercicios().subscribe(
+    (data) => {
       this.Ejercicio = data;
-    });
-  }
+      this.isLoading = false; // Oculta el spinner cuando los datos están cargados
+    },
+    (error) => {
+      this.isLoading = false; // Oculta el spinner si hay un error
+      this.presentToastError(); // Muestra un mensaje de error
+    }
+  );
+}
 
   async presentToastSuccess() {
     const toast = await this.toastController.create({
