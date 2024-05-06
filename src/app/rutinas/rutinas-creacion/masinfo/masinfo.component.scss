@@ -1,17 +1,23 @@
 
   ion-card-content {
-  color: #000;
+
+   
+
 
   strong {
-    color: #000;
+  color: var(--ion-color-primary);
   }
 }
 
+ion-card-title {
+  color: var(--ion-color-primary);
+}
 
 .modalContent {
   width: auto;
   height: auto;
-  background: transparent;
+background-color: var(--primary);
+color: white;
 }
 
 .modalContent ion-card {

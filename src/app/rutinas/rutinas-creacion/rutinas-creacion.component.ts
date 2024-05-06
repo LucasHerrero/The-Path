@@ -2,10 +2,17 @@ import { Ejercicios } from './../Ejercicios';
 import { RutinasCreacionService } from './rutinas-creacion.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController, AlertController } from '@ionic/angular';
+import {
+  ModalController,
+  AlertController,
+  ToastController,
+} from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { MasinfoComponent } from './masinfo/masinfo.component';
 import { ActionSheetController } from '@ionic/angular';
+import { AuthService } from 'src/app/auth/Auth.service';
+import { User } from '../User';
+import { IntJwtPayload } from 'src/app/auth/IntJwtPayload';
 
 @Component({
   selector: 'app-rutinas-creacion',
@@ -20,22 +27,57 @@ export class RutinasCreacionComponent implements OnInit {
   showEquipment: any;
   nombreRutina: string = '';
   cantidadEjercicios: number = 0;
-
+  user: IntJwtPayload = {} as IntJwtPayload;
   constructor(
     private modalController: ModalController,
     private rutinasCreacionService: RutinasCreacionService,
     private router: Router,
     private storage: Storage,
     private alertController: AlertController,
-    public actionSheetController: ActionSheetController
+    private actionSheetController: ActionSheetController,
+    private authService: AuthService,
+    private toastController: ToastController,
+    private route: Router
   ) {
-    this.guardarDatos();
+    this.datosRutina1();
   }
 
   ngOnInit() {
     this.rutinasCreacionService.getEjercicios().subscribe((data) => {
       this.Ejercicio = data;
     });
+  }
+
+  async presentToastSuccess() {
+    const toast = await this.toastController.create({
+      message: 'Creacion de rutina exitosa',
+      duration: 2000,
+      color: 'success',
+      position: 'top',
+      buttons: [
+        {
+          side: 'start',
+          icon: 'checkmark',
+        },
+      ],
+    });
+    toast.present();
+  }
+
+  async presentToastError() {
+    const toast = await this.toastController.create({
+      message: 'Error al crear la rutina',
+      duration: 2000,
+      color: 'danger',
+      position: 'top',
+      buttons: [
+        {
+          side: 'start',
+          icon: 'close',
+        },
+      ],
+    });
+    toast.present();
   }
 
   async presentEquipmentActionSheet() {
@@ -129,14 +171,18 @@ export class RutinasCreacionComponent implements OnInit {
 
     await alert.present();
   }
-  async guardarDatos() {
-    console.log('entro a guardar datos');
+  async datosRutina1() {
     this.nombreRutina = await this.storage.get('nombreRutina');
     this.cantidadEjercicios = await this.storage.get('cantidadEjercicios');
-    console.log(this.nombreRutina);
-    console.log(this.cantidadEjercicios);
+    //Logica para sacar id.
+    this.authService.isAuthenticated().then((isAuth) => {
+      if (isAuth) {
+        this.authService.decodeToken().then((data) => {
+          this.user = data;
+        });
+      }
+    });
   }
-
   async verMas(ejercicio: Ejercicios, event: Event) {
     event.stopPropagation();
 
@@ -146,7 +192,7 @@ export class RutinasCreacionComponent implements OnInit {
         ejercicio: ejercicio,
       },
       cssClass: 'modal',
-      presentingElement: await this.modalController.getTop()
+      presentingElement: await this.modalController.getTop(),
     });
 
     return await modal.present();
@@ -219,13 +265,51 @@ export class RutinasCreacionComponent implements OnInit {
     return this.ejerciciosSeleccionados.includes(ejercicio);
   }
 
-  async guardarRutina() {
-    const data = {
-      nombre: this.nombreRutina,
-      cantidadEj: this.cantidadEjercicios,
-      userFk: 1
-    };
-    console.log(data);
+  async logeate() {
+    const alert = await this.alertController.create({
+      header: '¿Parece que no has iniciado sesión?',
+      subHeader: 'Inicia sesión para poder ver tus rutinas',
+
+      buttons: ['Iniciar Sesion'],
+    });
+
+    await alert.present();
+
+    await alert.onDidDismiss().then(() => {
+      this.route.navigate(['/auth']);
+    });
   }
 
+  async guardarRutina() {
+    this.authService.isAuthenticated().then(async (isAuth) => {
+      if (isAuth) {
+        const data = {
+          nombre: this.nombreRutina,
+          cantidadEj: this.cantidadEjercicios,
+          userFk: this.user.userId,
+          ejercicios: this.ejerciciosSeleccionados.map((e) => e.id),
+        };
+
+        //POST
+        await this.rutinasCreacionService
+          .postRutina(data)
+          .then((response) => {
+            this.presentToastSuccess();
+            setTimeout(() => {
+              this.router.navigate(['/tus-rutinas']).then(() => {
+                location.reload();
+              });
+            }, 2000);
+          })
+          .catch((error) => {
+            this.presentToastError();
+          });
+        // location.reload();
+        this.modalController.dismiss();
+      } else {
+        this.logeate();
+        this.modalController.dismiss();
+      }
+    });
+  }
 }

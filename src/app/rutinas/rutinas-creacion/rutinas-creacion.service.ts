@@ -26,9 +26,15 @@ export class RutinasCreacionService {
     return this.http.get<Ejercicios[]>(this.url+`/search?equipacion=${search}`);
   }
 
-  postRutina(data :any) {
-    return this.http.post(this.url+`/rutina/new`,data);
-  }
+postRutina(data :any) {
+  return this.http.post(this.url+`/crearRutina`, data).toPromise().then(response => {
+    console.log(response);
+    return response;
+  }).catch(error => {
+    console.error(error);
+    throw error;
+  });
+}
 }
 
 

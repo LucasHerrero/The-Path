@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>Añadir Ejercicios</ion-title>
     <ion-buttons slot="end">
-      <ion-button>Guardar</ion-button>
+      <ion-button (click)="guardarRutina()">Guardar</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -32,8 +32,8 @@
       <div
         *ngIf="isSelected(ejercicio)"
         style="
-          border-radius: 2px;
-          border-left: 5px solid #3880ff;
+          border-radius: 5px;
+          border-left: 7px solid var(--ion-color-primary);
           padding-left: 10px;
         "
       >
