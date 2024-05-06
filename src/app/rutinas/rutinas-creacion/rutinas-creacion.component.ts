@@ -54,7 +54,7 @@ ngOnInit() {
     },
     (error) => {
       this.isLoading = false; // Oculta el spinner si hay un error
-      this.presentToastError(); // Muestra un mensaje de error
+      this.presentToastError2(); 
     }
   );
 }
@@ -91,6 +91,21 @@ ngOnInit() {
     toast.present();
   }
 
+  async presentToastError2() {
+    const toast = await this.toastController.create({
+      message: 'Error al cargar los ejercicios',
+      duration: 2000,
+      color: 'danger',
+      position: 'top',
+      buttons: [
+        {
+          side: 'start',
+          icon: 'close',
+        },
+      ],
+    });
+    toast.present();
+  }
   async presentEquipmentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
       header: 'Equipamiento',

@@ -21,7 +21,7 @@ export class AuthComponent {
   height: string = '';
   kg: string = '';
   isLoggedIn: boolean = false;
-  isLoginView = false; //TODO: CAMBIAR A TRUE PARA QUE APAREZCA EL LOGIN
+  isLoginView = true; 
 
   constructor(
     private authService: AuthService,

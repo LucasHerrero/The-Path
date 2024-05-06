@@ -4,7 +4,7 @@
 
 /** Ionic CSS Variables **/
 :root {
-	--ion-color-primary: #AFFC41;
+	--ion-color-primary: #8edb21;
 	--ion-color-primary-rgb: 175,252,65;
 	--ion-color-primary-contrast: #000000;
 	--ion-color-primary-contrast-rgb: 0,0,0;
@@ -68,7 +68,7 @@
 	--ion-color-dark-tint: #444444;
 
 }
-
+//TODO: PROBAR SI CAMBIANDO A LIGHT FUNCIONA BIEN MOVIL.
 @media (prefers-color-scheme: light) {
   /*
    * Dark Colors
