@@ -10,8 +10,13 @@
       <ion-segment-button value="Domingo">Domingo</ion-segment-button>
     </ion-segment>
   </div>
+  <div *ngIf="!isAuthenticatedVar">
+    <ion-button (click)="logeate()" expand="block" fill="clear" shape="round">
+      Logeate
+    </ion-button>
+  </div>
 
-  <div class="rutina">
+  <div class="rutina" *ngIf="isAuthenticatedVar">
     <div *ngFor="let day of days2">
       <ion-card *ngIf="day === selectedDay">
         <ion-card-header>
