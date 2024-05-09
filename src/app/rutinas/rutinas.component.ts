@@ -45,4 +45,8 @@ async guardarDatos(){
    await this.storage.set('dia', this.dia);
 }
 
+public isFormIncomplete(): boolean {
+  return !this.nombreRutina || !this.dia || !this.cantidadEjercicios;
+}
+
 }

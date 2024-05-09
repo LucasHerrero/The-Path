@@ -46,7 +46,7 @@
   </div>
 
   <div class="button-div">
-    <ion-button (click)="openModal()">
+    <ion-button [disabled]="isFormIncomplete()" [ngClass]="{'dark-button': isFormIncomplete()}" (click)="openModal()">
       <ion-icon name="add"> </ion-icon>
       Crea tu rutinas
     </ion-button>

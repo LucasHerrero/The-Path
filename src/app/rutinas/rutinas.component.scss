@@ -6,7 +6,18 @@ div.rutinas{
 
     padding: 0;
     margin: 0;
-;
+
+ion-label{
+    font-size: 1.1rem;
+
+}
+ion-item{
+  font-size: 1.1rem;
+}
+
+.dark-button {
+  background-color: #444;
+}
 }
 div.select{
 padding-bottom: 30px;
@@ -19,3 +30,9 @@ padding-top: 5px;
 
   text-align: center;
 }
+
+div.select:has(ion-item) ion-item{
+  padding: 10px 0px;
+  margin: 10px 0px;
+}
+
