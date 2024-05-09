@@ -11,6 +11,7 @@ import { FormControl, Validators } from '@angular/forms';
 export class RutinasComponent  {
 nombreRutina: string ="";
 cantidadEjercicios: number = 0;
+dia : string = "";
 
 
   constructor(private storage : Storage,private modalController : ModalController) {
@@ -26,6 +27,7 @@ cantidadEjercicios: number = 0;
     this.storage = storage;
     await this.storage.remove('nombreRutina');
     await this.storage.remove('cantidadEjercicios');
+    await this.storage.remove('dia');
   }
 
   async openModal() {
@@ -40,6 +42,7 @@ cantidadEjercicios: number = 0;
 async guardarDatos(){
   await this.storage.set('nombreRutina', this.nombreRutina);
     await this.storage.set('cantidadEjercicios', this.cantidadEjercicios);
+   await this.storage.set('dia', this.dia);
 }
 
 }

@@ -27,6 +27,7 @@ export class RutinasCreacionComponent implements OnInit {
   showEquipment: any;
   nombreRutina: string = '';
   cantidadEjercicios: number = 0;
+  dia : string = '';
   user: IntJwtPayload = {} as IntJwtPayload;
   isLoading = false;
 
@@ -54,7 +55,7 @@ ngOnInit() {
     },
     (error) => {
       this.isLoading = false; // Oculta el spinner si hay un error
-      this.presentToastError2(); 
+      this.presentToastError2();
     }
   );
 }
@@ -200,6 +201,7 @@ ngOnInit() {
   async datosRutina1() {
     this.nombreRutina = await this.storage.get('nombreRutina');
     this.cantidadEjercicios = await this.storage.get('cantidadEjercicios');
+    this.dia = await this.storage.get('dia');
     //Logica para sacar id.
     this.authService.isAuthenticated().then((isAuth) => {
       if (isAuth) {
@@ -312,7 +314,9 @@ ngOnInit() {
         const data = {
           nombre: this.nombreRutina,
           cantidadEj: this.cantidadEjercicios,
+          Dia: this.dia,
           userFk: this.user.userId,
+
           ejercicios: this.ejerciciosSeleccionados.map((e) => e.id),
         };
 

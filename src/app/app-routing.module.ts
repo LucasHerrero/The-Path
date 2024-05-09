@@ -6,40 +6,50 @@ import { AuthGuard } from './auth.guard';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomeModule),
+    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
     // canActivate: [AuthGuard] EJEMPLO PARA ASEGURAR UNA RUTA.
   },
   {
     path: 'rutinas',
-    loadChildren: () => import('./rutinas/rutinas.module').then( m => m.RutinasModule),
-
+    loadChildren: () =>
+      import('./rutinas/rutinas.module').then((m) => m.RutinasModule),
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then( m => m.AuthModule)
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: 'masinfo/:id',
     component: MasinfoComponent,
-
   },
   {
     path: 'tus-rutinas',
-    loadChildren: () => import('./tus-rutinas/tus-rutinas.module').then( m => m.TusRutinasPageModule)
+    loadChildren: () =>
+      import('./tus-rutinas/tus-rutinas.module').then(
+        (m) => m.TusRutinasPageModule
+      ),
+  },
+  {
+    path: 'tu-semana',
+    loadChildren: () =>
+      import('./tu-semana/tu-semana.module').then((m) => m.TuSemanaPageModule),
   },
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
-
-
+  {
+    path: 'tu-semana',
+    loadChildren: () =>
+      import('./tu-semana/tu-semana.module').then((m) => m.TuSemanaPageModule),
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

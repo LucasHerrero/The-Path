@@ -1,0 +1,85 @@
+<ion-content>
+  <div class="segmentDiv">
+    <ion-segment [scrollable]="true" [(ngModel)]="selectedDay">
+      <ion-segment-button value="Lunes">Lunes</ion-segment-button>
+      <ion-segment-button value="Martes">Martes</ion-segment-button>
+      <ion-segment-button value="Miercoles">Miercoles</ion-segment-button>
+      <ion-segment-button value="Jueves">Jueves</ion-segment-button>
+      <ion-segment-button value="Viernes">Viernes</ion-segment-button>
+      <ion-segment-button value="Sabado">Sabado</ion-segment-button>
+      <ion-segment-button value="Domingo">Domingo</ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div class="rutina">
+    <div *ngFor="let day of days2">
+      <ion-card *ngIf="day === selectedDay">
+        <ion-card-header>
+          <ion-card-title>¿Quieres agregar una rutina?</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-button (click)="agregarRutina()" expand="block" fill="outline" color="primary">
+            Agregar Rutina</ion-button
+          >
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div class="rutina2" *ngFor="let rutina of RutinaEjercicio">
+      <ion-card *ngIf="rutina.Rutina.Dia === selectedDay">
+        <ion-card-header>
+          <ion-card-title>{{rutina.Rutina.nombre}}</ion-card-title>
+          <ion-card-subtitle>{{rutina.Rutina.Dia}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content *ngFor="let ejercicio of rutina.Ejercicios">
+          <div class="space">
+            <div class="info">
+              <h2 style="font-weight: bolder; font-size: 1rem">
+                {{ejercicio.nombre}}
+              </h2>
+              <ion-chip>{{ejercicio.equipacion}}</ion-chip
+              ><ion-chip>{{ejercicio.musculo}}</ion-chip>
+
+              <div class="inputs">
+                <ion-input
+                  aria-label="Kg"
+                  placeholder="00 KG"
+                  class="custom"
+                ></ion-input>
+                <ion-input
+                  aria-label="Sets"
+                  placeholder="0 Sets"
+                  class="custom"
+                ></ion-input>
+                <ion-input
+                  aria-label="Reps"
+                  placeholder="0 Reps"
+                  class="custom"
+                ></ion-input>
+              </div>
+            </div>
+
+            <div class="checkbox">
+              <ion-checkbox id="open-modal" slot="start"></ion-checkbox>
+
+              <ion-icon
+                (click)="verMas(ejercicio , $event)"
+                name="information-circle-outline"
+              ></ion-icon>
+            </div>
+          </div>
+        </ion-card-content>
+        <div>
+          <ion-button expand="block" fill="outline" color="primary">
+            Terminar rutina.
+          </ion-button>
+        </div>
+      </ion-card>
+    </div>
+  </div>
+
+  <ion-modal trigger="verMas()" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+    <ng-template>
+      <div class="block">Block of Content</div>
+    </ng-template>
+  </ion-modal>
+</ion-content>
