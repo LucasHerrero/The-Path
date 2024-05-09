@@ -1,25 +1,25 @@
-
-
-<ion-content *ngIf="!isAuthenticatedVar">
-  <ion-button (click)="logeate()" expand="block" fill="clear" shape="round">
-    Logeate
-  </ion-button>
-</ion-content>
-
-<ion-content *ngIf="isAuthenticatedVar" [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">TusRutinas</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
- <ion-card *ngFor="let Rutina of RutinaEjercicio">
-    <ion-card-header>
-      <ion-card-title>{{Rutina.Rutina.nombre}}</ion-card-title>
-    </ion-card-header >
-    <ion-card-content *ngFor="let ejercicio of Rutina.Ejercicios">
-      <h2 style="font-weight: bolder; font-size: 1.1rem;">{{ejercicio.nombre}}</h2>
-      <p>{{ejercicio.instrucciones}}</p>
-    </ion-card-content>
-  </ion-card>
+<ion-content>
+  <div class="rutina" *ngFor="let rutina of RutinaEjercicio">
+    <div class="rutina2">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{rutina.Rutina.nombre}}</ion-card-title>
+          <ion-card-subtitle>{{rutina.Rutina.Dia}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content *ngFor="let ejercicio of rutina.Ejercicios">
+          <div class="space">
+            <div class="info">
+              <h2 style="font-weight: bolder; font-size: 1rem">
+                {{ejercicio.nombre}}
+              </h2>
+              <ion-chip>{{ejercicio.equipacion}}</ion-chip
+              ><ion-chip>{{ejercicio.musculo}}</ion-chip>
+              <ion-chip>{{ejercicio.dificultad}}</ion-chip>
+            </div>
+            <p>{{ejercicio.instrucciones}}</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
 </ion-content>
