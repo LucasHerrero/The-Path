@@ -3,38 +3,43 @@ import { Injectable } from '@angular/core';
 import { Ejercicios } from '../Ejercicios';
 import { environment } from 'src/environments/environment';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RutinasCreacionService {
-
-
   private url = environment.apiUrl;
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient) {}
 
   getEjercicios() {
-    return this.http.get<Ejercicios[]>(this.url+`/ejercicios`);
+    return this.http.get<Ejercicios[]>(this.url + `/ejercicios`);
   }
 
   getEjerciciosbySearchName(search: string) {
-    return this.http.get<Ejercicios[]>(this.url+`/search?nombre=${search}`);
+    return this.http.get<Ejercicios[]>(this.url + `/search?nombre=${search}`);
   }
   getEjerciciosbySearchMuscle(search: string) {
-    return this.http.get<Ejercicios[]>(this.url+`/search?musculo=${search}`);
+    return this.http.get<Ejercicios[]>(this.url + `/search?musculo=${search}`);
   }
   getEjerciciosbySearchEquipment(search: string) {
-    return this.http.get<Ejercicios[]>(this.url+`/search?equipacion=${search}`);
+    return this.http.get<Ejercicios[]>(
+      this.url + `/search?equipacion=${search}`
+    );
   }
 
-postRutina(data :any) {
-  return this.http.post(this.url+`/crearRutina`, data).toPromise().then(response => {
-    console.log(response);
-    return response;
-  }).catch(error => {
-    console.error(error);
-    throw error;
-  });
-}
-}
+  postRutina(data: any) {
+    return this.http
+      .post(this.url + `/crearRutina`, data)
+      .toPromise()
+      .then((response) => {
+        console.log(response);
+        return response;
+      })
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+  }
 
-
+  updateRutinaDay(idRutina : number, dia : any) {
+    return this.http.put(this.url + `/rutinas/${idRutina}`, dia);
+  }
+}

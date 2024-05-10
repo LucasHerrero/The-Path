@@ -23,8 +23,11 @@
           <ion-card-title>¿Quieres agregar una rutina?</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <ion-button (click)="agregarRutina()" expand="block" fill="outline" color="primary">
+          <ion-button (click)="presentRutinasActionSheet()" expand="block" fill="outline" color="primary">
             Agregar Rutina</ion-button
+          >
+          <ion-button (click)="crearRutina()" expand="block" fill="outline" color="primary">
+            Crear Rutina</ion-button
           >
         </ion-card-content>
       </ion-card>
@@ -81,10 +84,3 @@
       </ion-card>
     </div>
   </div>
-
-  <ion-modal trigger="verMas()" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
-    <ng-template>
-      <div class="block">Block of Content</div>
-    </ng-template>
-  </ion-modal>
-</ion-content>
