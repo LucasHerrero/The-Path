@@ -76,9 +76,10 @@ ngOnInit() {
     toast.present();
   }
 
-  async presentToastError() {
+  async presentToastError(msg: any)
+  {
     const toast = await this.toastController.create({
-      message: 'Error al crear la rutina',
+      message: msg.error,
       duration: 2000,
       color: 'danger',
       position: 'top',
@@ -332,7 +333,7 @@ ngOnInit() {
             }, 2000);
           })
           .catch((error) => {
-            this.presentToastError();
+            this.presentToastError(error);
           });
         // location.reload();
         this.modalController.dismiss();
