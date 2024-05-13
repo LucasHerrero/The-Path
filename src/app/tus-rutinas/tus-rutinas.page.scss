@@ -48,7 +48,9 @@ ion-card-subtitle {
   text-align: center;
 
   border-radius: 8px;
-  margin: 30px 20px;
+margin-top: 15px;
+margin-right: 20px;
+margin-left: 20px;
   box-shadow: 0px 0px 8px 4px #aefc41;
   .space {
     display: flex;
@@ -66,4 +68,8 @@ ion-card-subtitle {
     margin: 0px;
     padding: 10px 15px;
   }
+}
+
+ion-label{
+  padding: 25px 10px;
 }

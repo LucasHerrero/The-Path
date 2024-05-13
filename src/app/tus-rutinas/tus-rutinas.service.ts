@@ -14,4 +14,11 @@ export class TusRutinasService {
   getTusRutinas( id : number): Observable<RutinaEjercicio[]> {
     return this.http.get<RutinaEjercicio[]>(`${this.url}/RutinasEjercicio/user/${id}`);
   }
+
+  getRutinasSearchByDay(id: number, day: string): Observable<RutinaEjercicio[]> {
+    return this.http.get<RutinaEjercicio[]>(`${this.url}/RutinasEjercicio/search?Dia=${day}&userId=${id}`);
+  }
+  getRutinasSearchByName(id: number, name: string): Observable<RutinaEjercicio[]> {
+    return this.http.get<RutinaEjercicio[]>(`${this.url}/RutinasEjercicio/search?nombre=${name}&userId=${id}`);
+  }
 }

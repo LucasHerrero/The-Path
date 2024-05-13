@@ -27,7 +27,7 @@ export class RutinasCreacionComponent implements OnInit {
   showEquipment: any;
   nombreRutina: string = '';
   cantidadEjercicios: number = 0;
-  dia : string = '';
+  dia: string = '';
   user: IntJwtPayload = {} as IntJwtPayload;
   isLoading = false;
 
@@ -45,20 +45,19 @@ export class RutinasCreacionComponent implements OnInit {
     this.datosRutina1();
   }
 
-
-ngOnInit() {
-  this.isLoading = true;
-  this.rutinasCreacionService.getEjercicios().subscribe(
-    (data) => {
-      this.Ejercicio = data;
-      this.isLoading = false; // Oculta el spinner cuando los datos están cargados
-    },
-    (error) => {
-      this.isLoading = false; // Oculta el spinner si hay un error
-      this.presentToastError2();
-    }
-  );
-}
+  ngOnInit() {
+    this.isLoading = true;
+    this.rutinasCreacionService.getEjercicios().subscribe(
+      (data) => {
+        this.Ejercicio = data;
+        this.isLoading = false; // Oculta el spinner cuando los datos están cargados
+      },
+      (error) => {
+        this.isLoading = false; // Oculta el spinner si hay un error
+        this.presentToastError2();
+      }
+    );
+  }
 
   async presentToastSuccess() {
     const toast = await this.toastController.create({
@@ -76,8 +75,7 @@ ngOnInit() {
     toast.present();
   }
 
-  async presentToastError(msg: any)
-  {
+  async presentToastError(msg: any) {
     const toast = await this.toastController.create({
       message: msg.error,
       duration: 2000,
@@ -232,48 +230,38 @@ ngOnInit() {
   }
 
   filterMuscle(evt: any) {
-    console.log(evt);
-
     this.rutinasCreacionService
       .getEjerciciosbySearchMuscle(evt)
       .subscribe((data) => {
         this.Ejercicio = data;
-        console.log(this.Ejercicio);
       });
   }
 
   filterEquipment(evt: any) {
-    console.log(evt);
-
     this.rutinasCreacionService
       .getEjerciciosbySearchEquipment(evt)
       .subscribe((data) => {
         this.Ejercicio = data;
-        console.log(this.Ejercicio);
       });
   }
 
   filterlist(evt: any) {
     evt = evt.target.value;
-    console.log(evt);
 
-    if (evt.length > 2) {
+    if (evt.length > 0) {
       this.rutinasCreacionService
         .getEjerciciosbySearchName(evt)
         .subscribe((data) => {
           this.Ejercicio = data;
-          console.log(this.Ejercicio);
         });
     } else {
       this.rutinasCreacionService.getEjercicios().subscribe((data) => {
         this.Ejercicio = data;
-        console.log(this.Ejercicio);
       });
     }
   }
 
   seleccionarEjercicio(ejercicio: Ejercicios) {
-    console.log('entro a seleccionar ejercicio');
     if (ejercicio) {
       if (this.ejerciciosSeleccionados.includes(ejercicio)) {
         this.ejerciciosSeleccionados = this.ejerciciosSeleccionados.filter(
@@ -287,7 +275,6 @@ ngOnInit() {
         }
       }
     }
-    console.log(this.ejerciciosSeleccionados);
   }
 
   isSelected(ejercicio: Ejercicios) {
