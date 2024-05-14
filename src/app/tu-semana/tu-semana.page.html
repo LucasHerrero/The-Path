@@ -1,6 +1,10 @@
 <ion-content>
   <div class="segmentDiv">
-    <ion-segment (ngModelChange)="refresh()" [scrollable]="true" [(ngModel)]="selectedDay">
+    <ion-segment
+      (ngModelChange)="refresh()"
+      [scrollable]="true"
+      [(ngModel)]="selectedDay"
+    >
       <ion-segment-button value="Lunes">Lunes</ion-segment-button>
       <ion-segment-button value="Martes">Martes</ion-segment-button>
       <ion-segment-button value="Miercoles">Miercoles</ion-segment-button>
@@ -23,10 +27,20 @@
           <ion-card-title>¿Quieres agregar una rutina?</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <ion-button (click)="presentRutinasActionSheet()" expand="block" fill="outline" color="primary">
+          <ion-button
+            (click)="presentRutinasActionSheet()"
+            expand="block"
+            fill="outline"
+            color="primary"
+          >
             Agregar Rutina</ion-button
           >
-          <ion-button (click)="crearRutina()" expand="block" fill="outline" color="primary">
+          <ion-button
+            (click)="crearRutina()"
+            expand="block"
+            fill="outline"
+            color="primary"
+          >
             Crear Rutina</ion-button
           >
         </ion-card-content>
@@ -34,12 +48,26 @@
     </div>
     <div class="rutina2" *ngFor="let rutina of RutinaEjercicio">
       <ion-card *ngIf="rutina.Rutina.Dia === selectedDay">
-        <ion-card-header>
-          <ion-card-title>{{rutina.Rutina.nombre}}</ion-card-title>
-          <ion-card-subtitle>{{rutina.Rutina.Dia}}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content  [ngClass]="{'exerciseSelected': isSelected(ejercicio)}" *ngFor="let ejercicio of rutina.Ejercicios">
-          <div class="space" >
+        <div class="header-space">
+          <div>
+            <ion-card-header>
+              <ion-card-title>{{rutina.Rutina.nombre}}</ion-card-title>
+              <ion-card-subtitle>{{rutina.Rutina.Dia}}</ion-card-subtitle>
+            </ion-card-header>
+          </div>
+          <div class="icon">
+            <ion-icon
+              (click)="removeDay(rutina.Rutina.id)"
+              name="close-circle-outline"
+              color="danger"
+            ></ion-icon>
+          </div>
+        </div>
+        <ion-card-content
+          [ngClass]="{'exerciseSelected': isSelected(ejercicio)}"
+          *ngFor="let ejercicio of rutina.Ejercicios"
+        >
+          <div class="space">
             <div class="info">
               <h2 style="font-weight: bolder; font-size: 1rem">
                 {{ejercicio.nombre}}
@@ -48,26 +76,47 @@
               ><ion-chip>{{ejercicio.musculo}}</ion-chip>
 
               <div class="inputs">
-                <ion-input
-                  aria-label="Kg"
-                  placeholder="00 KG"
-                  class="custom"
-                ></ion-input>
-                <ion-input
-                  aria-label="Sets"
-                  placeholder="0 Sets"
-                  class="custom"
-                ></ion-input>
-                <ion-input
-                  aria-label="Reps"
-                  placeholder="0 Reps"
-                  class="custom"
-                ></ion-input>
+                <div class="inputKg">
+                  <ion-label>KG</ion-label>
+                  <ion-input
+                    [(ngModel)]="ejercicio.kg"
+                    aria-label="Kg"
+                    placeholder="00 KG"
+                    class="custom"
+                    type="number"
+                  ></ion-input>
+                </div>
+                <div class="inputSets">
+                  <ion-label>SETS</ion-label>
+                  <ion-input
+                    [(ngModel)]="ejercicio.sets"
+                    aria-label="Sets"
+                    placeholder="0 Sets"
+                    class="custom"
+                    type="number"
+                  ></ion-input>
+                </div>
+                <div class="inputReps">
+
+                  <ion-label>REPS</ion-label>
+                  <ion-input
+                    [(ngModel)]="ejercicio.reps"
+                    aria-label="Reps"
+                    placeholder="0 Reps"
+                    class="custom"
+                    type="number"
+                  ></ion-input>
+                </div>
               </div>
             </div>
 
             <div class="checkbox">
-              <ion-checkbox id="open-modal" slot="start" (onchange)="isSelected(ejercicio)" (click)="logCheckedExercise(ejercicio, rutina.Ejercicios.length)"></ion-checkbox>
+              <ion-checkbox
+                id="open-modal"
+                slot="start"
+                (onchange)="isSelected(ejercicio)"
+                (click)="logCheckedExercise(ejercicio, rutina.Ejercicios.length)"
+              ></ion-checkbox>
               <ion-icon
                 (click)="verMas(ejercicio , $event)"
                 name="information-circle-outline"
@@ -76,10 +125,17 @@
           </div>
         </ion-card-content>
         <div>
-          <ion-button (click)="rutinaFinalizada()" expand="block" fill="outline" color="primary" [disabled]="!isRoutineComplete">
+          <ion-button
+            (click)="rutinaFinalizada()"
+            expand="block"
+            fill="outline"
+            color="primary"
+            [disabled]="!isRoutineComplete"
+          >
             Terminar rutina
           </ion-button>
         </div>
       </ion-card>
     </div>
   </div>
+</ion-content>

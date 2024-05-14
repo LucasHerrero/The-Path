@@ -5,6 +5,10 @@ export interface Ejercicios {
   equipacion:    Equipacion;
   dificultad:    Dificultad;
   instrucciones: string;
+
+  reps:          number | null;
+  sets:          number | null;
+  kg:            number | null;
 }
 
 export enum Dificultad {

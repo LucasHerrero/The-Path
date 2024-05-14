@@ -106,7 +106,10 @@ export class TuSemanaPage implements OnInit {
     };
 
     this.rutinasCreacion.updateRutinaDay(id, dia).subscribe((data) => {
-      this.presentToastSuccess();
+      if (dia.Dia === '') {
+      } else {
+        this.presentToastSuccess();
+      }
       setTimeout(() => {
         location.reload();
       }, 2000);
@@ -177,22 +180,38 @@ export class TuSemanaPage implements OnInit {
   isSelected(ejercicio: Ejercicios) {
     return this.ejerciciosSeleccionados.includes(ejercicio);
   }
-  async presentToastFinish() {
+  async presentToastFinish(msg: string, icon: string) {
     const toast = await this.toastController.create({
-      message: 'Haz completado la rutina. ¡Felicidades!',
+      message: msg,
       duration: 5000,
       color: 'success',
       position: 'top',
       buttons: [
         {
           side: 'start',
-          icon: 'checkmark',
+          icon: icon,
         },
       ],
     });
     toast.present();
   }
   async rutinaFinalizada() {
-    this.presentToastFinish();
+    const msg: string = 'Haz completado la rutina. ¡Felicidades!';
+    const icon: string = 'checkmark';
+    setTimeout(() => {
+      location.reload();
+    }, 2000);
+    this.presentToastFinish(msg, icon);
+  }
+
+  async removeDay(id: number) {
+    const msg: string = 'Rutina eliminada con exito.';
+    const icon: string = 'trash-outline';
+    await this.updateDay(id, '').then(() => {
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
+      this.presentToastFinish(msg, icon);
+    });
   }
 }

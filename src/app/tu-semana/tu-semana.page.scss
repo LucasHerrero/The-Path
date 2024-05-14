@@ -78,6 +78,11 @@ ion-card-subtitle {
     display: flex;
     gap: 15px;
     margin-top: 25px;
+    ion-label {
+      padding: 0;
+      margin: 0;
+
+    }
 
     ion-input {
       width: 73px;
@@ -106,10 +111,17 @@ ion-card-subtitle {
     padding: 10px 15px;
   }
 }
-
+.header-space {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 5%;
+  .icon {
+    display: flex;
+    align-items: center;
+  }
+}
 .exerciseSelected {
   background-color: #aefc4190;
-  color: #aefc41;
   padding: 0px;
   margin: 0px;
 }
