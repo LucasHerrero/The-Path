@@ -24,7 +24,8 @@ export class TuSemanaPage implements OnInit {
   RutinaEjercicio: RutinaEjercicio[] = [];
   days2: string[] = [];
   isAuthenticatedVar: boolean = false;
-
+  ejerciciosSeleccionados: Ejercicios[] = [];
+  isRoutineComplete = false;
   constructor(
     private actionSheetController: ActionSheetController,
     private alertController: AlertController,
@@ -78,6 +79,11 @@ export class TuSemanaPage implements OnInit {
     );
   }
 
+  refresh() {
+    this.ejerciciosSeleccionados = [];
+    console.log('refresh');
+    console.log(this.ejerciciosSeleccionados);
+  }
   async presentToastSuccess() {
     const toast = await this.toastController.create({
       message: 'Rutina agregada con exito.',
@@ -155,5 +161,38 @@ export class TuSemanaPage implements OnInit {
     await alert.onDidDismiss().then(() => {
       this.route.navigate(['/auth']);
     });
+  }
+  logCheckedExercise(ejercicio: Ejercicios, cantidadEj: number) {
+    if (this.ejerciciosSeleccionados.includes(ejercicio)) {
+      this.ejerciciosSeleccionados = this.ejerciciosSeleccionados.filter(
+        (e) => e !== ejercicio
+      );
+    } else {
+      this.ejerciciosSeleccionados.push(ejercicio);
+    }
+    console.log(this.ejerciciosSeleccionados);
+    console.log(cantidadEj);
+    this.isRoutineComplete = this.ejerciciosSeleccionados.length === cantidadEj;
+  }
+  isSelected(ejercicio: Ejercicios) {
+    return this.ejerciciosSeleccionados.includes(ejercicio);
+  }
+  async presentToastFinish() {
+    const toast = await this.toastController.create({
+      message: 'Haz completado la rutina. ¡Felicidades!',
+      duration: 5000,
+      color: 'success',
+      position: 'top',
+      buttons: [
+        {
+          side: 'start',
+          icon: 'checkmark',
+        },
+      ],
+    });
+    toast.present();
+  }
+  async rutinaFinalizada() {
+    this.presentToastFinish();
   }
 }

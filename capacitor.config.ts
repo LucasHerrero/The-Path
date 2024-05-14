@@ -20,3 +20,5 @@ const config: CapacitorConfig = {
 };
 
 export default config;
+
+      //TODO: REVISAR EL SPLASH

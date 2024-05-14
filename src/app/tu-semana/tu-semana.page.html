@@ -1,6 +1,6 @@
 <ion-content>
   <div class="segmentDiv">
-    <ion-segment [scrollable]="true" [(ngModel)]="selectedDay">
+    <ion-segment (ngModelChange)="refresh()" [scrollable]="true" [(ngModel)]="selectedDay">
       <ion-segment-button value="Lunes">Lunes</ion-segment-button>
       <ion-segment-button value="Martes">Martes</ion-segment-button>
       <ion-segment-button value="Miercoles">Miercoles</ion-segment-button>
@@ -38,8 +38,8 @@
           <ion-card-title>{{rutina.Rutina.nombre}}</ion-card-title>
           <ion-card-subtitle>{{rutina.Rutina.Dia}}</ion-card-subtitle>
         </ion-card-header>
-        <ion-card-content *ngFor="let ejercicio of rutina.Ejercicios">
-          <div class="space">
+        <ion-card-content  [ngClass]="{'exerciseSelected': isSelected(ejercicio)}" *ngFor="let ejercicio of rutina.Ejercicios">
+          <div class="space" >
             <div class="info">
               <h2 style="font-weight: bolder; font-size: 1rem">
                 {{ejercicio.nombre}}
@@ -67,8 +67,7 @@
             </div>
 
             <div class="checkbox">
-              <ion-checkbox id="open-modal" slot="start"></ion-checkbox>
-
+              <ion-checkbox id="open-modal" slot="start" (onchange)="isSelected(ejercicio)" (click)="logCheckedExercise(ejercicio, rutina.Ejercicios.length)"></ion-checkbox>
               <ion-icon
                 (click)="verMas(ejercicio , $event)"
                 name="information-circle-outline"
@@ -77,8 +76,8 @@
           </div>
         </ion-card-content>
         <div>
-          <ion-button expand="block" fill="outline" color="primary">
-            Terminar rutina.
+          <ion-button (click)="rutinaFinalizada()" expand="block" fill="outline" color="primary" [disabled]="!isRoutineComplete">
+            Terminar rutina
           </ion-button>
         </div>
       </ion-card>
