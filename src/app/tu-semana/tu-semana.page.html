@@ -28,6 +28,7 @@
         </ion-card-header>
         <ion-card-content>
           <ion-button
+            *ngIf="noRutinas"
             (click)="presentRutinasActionSheet()"
             expand="block"
             fill="outline"
@@ -97,7 +98,6 @@
                   ></ion-input>
                 </div>
                 <div class="inputReps">
-
                   <ion-label>REPS</ion-label>
                   <ion-input
                     [(ngModel)]="ejercicio.reps"
@@ -126,7 +126,7 @@
         </ion-card-content>
         <div>
           <ion-button
-            (click)="rutinaFinalizada()"
+            (click)="rutinaFinalizada(rutina.Rutina.id)"
             expand="block"
             fill="outline"
             color="primary"

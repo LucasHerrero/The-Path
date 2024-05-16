@@ -1,6 +1,6 @@
+import { TusRutinasService } from './../tus-rutinas/tus-rutinas.service';
 import { dia } from './../rutinas/Rutina';
 import { Component, OnInit } from '@angular/core';
-import { TusRutinasService } from '../tus-rutinas/tus-rutinas.service';
 import { RutinaEjercicio } from '../rutinas/RutinaEjercicio';
 import { Ejercicios } from '../rutinas/Ejercicios';
 import {
@@ -13,6 +13,8 @@ import { MasinfoComponent } from '../rutinas/rutinas-creacion/masinfo/masinfo.co
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/Auth.service';
 import { RutinasCreacionService } from '../rutinas/rutinas-creacion/rutinas-creacion.service';
+import { IntJwtPayload } from '../auth/IntJwtPayload';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tu-semana',
@@ -26,6 +28,8 @@ export class TuSemanaPage implements OnInit {
   isAuthenticatedVar: boolean = false;
   ejerciciosSeleccionados: Ejercicios[] = [];
   isRoutineComplete = false;
+  userId: number = 0;
+  noRutinas: boolean = false;
   constructor(
     private actionSheetController: ActionSheetController,
     private alertController: AlertController,
@@ -33,7 +37,8 @@ export class TuSemanaPage implements OnInit {
     private route: Router,
     private tusRutinas: TusRutinasService,
     private rutinasCreacion: RutinasCreacionService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private loadingController: LoadingController
   ) {
     const days = [
       'Domingo',
@@ -49,11 +54,7 @@ export class TuSemanaPage implements OnInit {
     this.selectedDay = days[currentDay] as dia;
   }
   ngOnInit() {
-    this.authService.isAuthenticated().then((isAuthenticated) => {
-      if (isAuthenticated) {
-        this.isAuthenticatedVar = true;
-      }
-    });
+    this.presentLoading();
     var days2 = [
       'Domingo',
       'Lunes',
@@ -63,22 +64,49 @@ export class TuSemanaPage implements OnInit {
       'Viernes',
       'Sabado',
     ];
+    this.authService.isAuthenticated().then((isAuthenticated) => {
+      if (isAuthenticated) {
+        this.isAuthenticatedVar = true;
 
-    this.tusRutinas.getTusRutinas(16).subscribe(
-      (data) => {
-        this.RutinaEjercicio = data;
+        this.authService.decodeToken().then((decodedToken: IntJwtPayload) => {
+          this.userId = decodedToken.userId;
+          this.tusRutinas.getTusRutinas(decodedToken.userId).subscribe(
+            (data) => {
+              console.log(data);
+              if (data) {
+                this.noRutinas = true;
+              }
+              this.RutinaEjercicio = data;
+              this.dismissLoading();
 
-        this.RutinaEjercicio.forEach((rutina) => {
-          days2 = days2.filter((day) => day !== rutina.Rutina.Dia);
+              this.RutinaEjercicio.forEach((rutina) => {
+                days2 = days2.filter((day) => day !== rutina.Rutina.Dia);
+              });
+              this.days2 = days2;
+            },
+            (error) => {
+              this.presentToastError(
+                'Error al cargar las rutinas',
+                'close-circle'
+              );
+              this.dismissLoading();
+            }
+          );
         });
-        this.days2 = days2;
-      },
-      (error) => {
-        console.log(error);
       }
-    );
+    });
   }
-
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Cargando...',
+      spinner: 'crescent',
+      cssClass: 'custom-loading',
+    });
+    await loading.present();
+  }
+  async dismissLoading() {
+    await this.loadingController.dismiss();
+  }
   refresh() {
     this.ejerciciosSeleccionados = [];
     console.log('refresh');
@@ -195,17 +223,49 @@ export class TuSemanaPage implements OnInit {
     });
     toast.present();
   }
-  async rutinaFinalizada() {
+  async presentToastError(msg: string, icon: string) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 5000,
+      color: 'danger',
+      position: 'top',
+      buttons: [
+        {
+          side: 'start',
+          icon: icon,
+        },
+      ],
+    });
+    toast.present();
+  }
+  async rutinaFinalizada(idRutina: number) {
     const msg: string = 'Haz completado la rutina. ¡Felicidades!';
     const icon: string = 'checkmark';
-    setTimeout(() => {
-      location.reload();
-    }, 2000);
-    this.presentToastFinish(msg, icon);
+
+    this.ejerciciosSeleccionados.forEach((ejercicio) => {
+      const rutinaPut = {
+        idRutina: idRutina,
+        idEjercicio: ejercicio.id,
+        kg: ejercicio.kg,
+        reps: ejercicio.reps,
+        sets: ejercicio.sets,
+      };
+
+      this.tusRutinas.editRutinaskg(this.userId, rutinaPut).subscribe(
+        (data) => {
+          console.log('PERFE');
+          this.presentToastFinish(msg, icon);
+        },
+        (error) => {
+          console.log(error);
+          this.presentToastError('Error al guardar los datos', 'close-circle');
+        }
+      );
+    });
   }
 
   async removeDay(id: number) {
-    const msg: string = 'Rutina eliminada con exito.';
+    const msg: string = 'Has quitado la rutina de tu semana.';
     const icon: string = 'trash-outline';
     await this.updateDay(id, '').then(() => {
       setTimeout(() => {

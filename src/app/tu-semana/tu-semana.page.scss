@@ -125,3 +125,6 @@ ion-card-subtitle {
   padding: 0px;
   margin: 0px;
 }
+.custom-loading .loading-wrapper {
+  --background: var(--ion-color-primary);
+}

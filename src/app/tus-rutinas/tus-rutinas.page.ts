@@ -2,7 +2,11 @@ import { AuthService } from './../auth/Auth.service';
 import { TusRutinasService } from './tus-rutinas.service';
 import { Component, OnInit } from '@angular/core';
 import { RutinaEjercicio } from '../rutinas/RutinaEjercicio';
-import { ActionSheetController, AlertController } from '@ionic/angular';
+import {
+  ActionSheetController,
+  AlertController,
+  LoadingController,
+} from '@ionic/angular';
 import { Router } from '@angular/router';
 import { IntJwtPayload } from '../auth/IntJwtPayload';
 import { Ejercicios } from '../rutinas/Ejercicios';
@@ -14,18 +18,21 @@ import { Ejercicios } from '../rutinas/Ejercicios';
 })
 export class TusRutinasPage implements OnInit {
   RutinaEjercicioORG: RutinaEjercicio[] = [];
-  idUser : number = 0;
+  idUser: number = 0;
   RutinaEjercicio: RutinaEjercicio[] = [];
-  isAuthenticatedVar = false;
+  isAuthenticatedVar = true;
+  noRutinas: boolean = true;
   constructor(
     private tusRutinasService: TusRutinasService,
     private authService: AuthService,
     private alertController: AlertController,
     private route: Router,
-    private actionSheetController: ActionSheetController
+    private actionSheetController: ActionSheetController,
+    private loadingController: LoadingController
   ) {}
 
   ngOnInit() {
+    this.presentLoading();
     this.authService.isAuthenticated().then((isAuthenticated) => {
       if (isAuthenticated) {
         this.isAuthenticatedVar = true;
@@ -36,15 +43,33 @@ export class TusRutinasPage implements OnInit {
           this.tusRutinasService
             .getTusRutinas(decodedToken.userId)
             .subscribe((data) => {
+              console.log(data);
+              this.dismissLoading();
+              if (data.length == 0) {
+                this.noRutinas = true;
+              }else {
+                this.noRutinas = false;
+              }
+
               this.RutinaEjercicio = data;
               this.RutinaEjercicioORG = data;
-              console.log('RutinaEjercicio', this.RutinaEjercicio);
             });
         });
       }
     });
   }
 
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Cargando...',
+      spinner: 'crescent',
+      cssClass: 'custom-loading',
+    });
+    await loading.present();
+  }
+  async dismissLoading() {
+    await this.loadingController.dismiss();
+  }
   async logeate() {
     const alert = await this.alertController.create({
       header: '¿Parece que no has iniciado sesión?',
@@ -61,17 +86,18 @@ export class TusRutinasPage implements OnInit {
   }
 
   filterlist(evt: any) {
-
-    if ( evt.target !== undefined) {
+    if (evt.target !== undefined) {
       evt = evt.target.value;
-    }else {
+    } else {
       evt = evt;
     }
     if (evt.length > 1) {
-      this.tusRutinasService.getRutinasSearchByName(this.idUser,evt).subscribe((data) => {
-        console.log(data);
-        this.RutinaEjercicio = data;
-      });
+      this.tusRutinasService
+        .getRutinasSearchByName(this.idUser, evt)
+        .subscribe((data) => {
+          console.log(data);
+          this.RutinaEjercicio = data;
+        });
     } else {
       this.authService.isAuthenticated().then((isAuthenticated) => {
         if (isAuthenticated) {
@@ -89,8 +115,7 @@ export class TusRutinasPage implements OnInit {
   }
 
   async presentRutinasSheet() {
-
-    var nombre = "";
+    var nombre = '';
     type Button = {
       text: string;
       handler: () => void;
@@ -121,10 +146,12 @@ export class TusRutinasPage implements OnInit {
     await actionSheet.present();
   }
   filterByDay(day: string) {
-    this.tusRutinasService.getRutinasSearchByDay(this.idUser,day).subscribe((data) => {
-      this.RutinaEjercicio = data;
-      console.log("Rutina", this.RutinaEjercicio);
-    });
+    this.tusRutinasService
+      .getRutinasSearchByDay(this.idUser, day)
+      .subscribe((data) => {
+        this.RutinaEjercicio = data;
+        console.log('Rutina', this.RutinaEjercicio);
+      });
   }
   async presentDayActionSheet() {
     const actionSheet = await this.actionSheetController.create({

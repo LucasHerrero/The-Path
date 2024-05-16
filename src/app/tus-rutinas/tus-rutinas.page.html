@@ -3,9 +3,7 @@
     (ionInput)="filterlist($event)"
     placeholder="Buscar rutinas"
   ></ion-searchbar>
-  <ion-label>
-    Filtrar por:
-  </ion-label>
+  <ion-label> Filtrar por: </ion-label>
   <ion-row>
     <ion-col size="6">
       <ion-button expand="block" (click)="presentRutinasSheet()"
@@ -18,7 +16,23 @@
       >
     </ion-col>
   </ion-row>
-
+  <div class="noRutinas" *ngIf="noRutinas">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          Crea una rutina para empezar a entrenar
+        </ion-card-title>
+      </ion-card-header>
+      <ion-button
+        routerLink="/rutinas"
+        expand="block"
+        fill="outline"
+        color="primary"
+      >
+        Crea tu rutina
+      </ion-button>
+    </ion-card>
+  </div>
   <div class="rutina" *ngFor="let rutina of RutinaEjercicio">
     <div class="rutina2">
       <ion-card>

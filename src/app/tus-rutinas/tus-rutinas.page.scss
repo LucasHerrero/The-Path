@@ -75,3 +75,16 @@ ion-card-subtitle {
 ion-label {
   padding: 25px 10px;
 }
+
+.custom-loading .loading-wrapper {
+  --background: var(--ion-color-primary);
+}
+
+.noRutinas {
+  padding: 5px;
+  text-align: center;
+
+  ion-card-header {
+    margin-bottom: 20px;
+  }
+}

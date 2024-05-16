@@ -11,14 +11,30 @@ export class TusRutinasService {
   url = environment.apiUrl;
   constructor(public http: HttpClient) {}
 
-  getTusRutinas( id : number): Observable<RutinaEjercicio[]> {
-    return this.http.get<RutinaEjercicio[]>(`${this.url}/RutinasEjercicio/user/${id}`);
+  getTusRutinas(id: number): Observable<RutinaEjercicio[]> {
+    return this.http.get<RutinaEjercicio[]>(
+      `${this.url}/RutinasEjercicio/user/${id}`
+    );
   }
 
-  getRutinasSearchByDay(id: number, day: string): Observable<RutinaEjercicio[]> {
-    return this.http.get<RutinaEjercicio[]>(`${this.url}/RutinasEjercicio/search?Dia=${day}&userId=${id}`);
+  getRutinasSearchByDay(
+    id: number,
+    day: string
+  ): Observable<RutinaEjercicio[]> {
+    return this.http.get<RutinaEjercicio[]>(
+      `${this.url}/RutinasEjercicio/search?Dia=${day}&userId=${id}`
+    );
   }
-  getRutinasSearchByName(id: number, name: string): Observable<RutinaEjercicio[]> {
-    return this.http.get<RutinaEjercicio[]>(`${this.url}/RutinasEjercicio/search?nombre=${name}&userId=${id}`);
+  getRutinasSearchByName(
+    id: number,
+    name: string
+  ): Observable<RutinaEjercicio[]> {
+    return this.http.get<RutinaEjercicio[]>(
+      `${this.url}/RutinasEjercicio/search?nombre=${name}&userId=${id}`
+    );
+  }
+
+  editRutinaskg(idUser: number, body: any): Observable<any> {
+    return this.http.put(`${this.url}/rutinaEjercicioKg/${idUser}`, body);
   }
 }
