@@ -80,31 +80,37 @@
                 <div class="inputKg">
                   <ion-label>KG</ion-label>
                   <ion-input
+                    [disabled]="isSelected(ejercicio)"
                     [(ngModel)]="ejercicio.kg"
                     aria-label="Kg"
                     placeholder="00 KG"
                     class="custom"
                     type="number"
+                    max="300"
                   ></ion-input>
                 </div>
                 <div class="inputSets">
                   <ion-label>SETS</ion-label>
                   <ion-input
+                    [disabled]="isSelected(ejercicio)"
                     [(ngModel)]="ejercicio.sets"
                     aria-label="Sets"
                     placeholder="0 Sets"
                     class="custom"
                     type="number"
+                    max="20"
                   ></ion-input>
                 </div>
                 <div class="inputReps">
                   <ion-label>REPS</ion-label>
                   <ion-input
+                    [disabled]="isSelected(ejercicio)"
                     [(ngModel)]="ejercicio.reps"
                     aria-label="Reps"
                     placeholder="0 Reps"
                     class="custom"
                     type="number"
+                    max="20"
                   ></ion-input>
                 </div>
               </div>
@@ -118,10 +124,17 @@
                 (click)="logCheckedExercise(ejercicio, rutina.Ejercicios.length)"
               ></ion-checkbox>
               <ion-icon
-                (click)="verMas(ejercicio , $event)"
+                (onchange)="isSelectedInfo(ejercicio)"
+                (click)="logCheckedInfo(ejercicio)"
                 name="information-circle-outline"
               ></ion-icon>
             </div>
+          </div>
+          <div class="BefInf" *ngIf="isSelectedInfo(ejercicio)">
+            <ion-card class="exerciseInfoSelected slideDown">
+              <h3>Instrucciones</h3>
+              <p style="font-size: 1rem">{{ejercicio.instrucciones}}</p>
+            </ion-card>
           </div>
         </ion-card-content>
         <div>

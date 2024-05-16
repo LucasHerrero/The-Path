@@ -27,9 +27,11 @@ export class TuSemanaPage implements OnInit {
   days2: string[] = [];
   isAuthenticatedVar: boolean = false;
   ejerciciosSeleccionados: Ejercicios[] = [];
+  ejerciciosInfo: Ejercicios[] = [];
   isRoutineComplete = false;
   userId: number = 0;
   noRutinas: boolean = false;
+  check: boolean = false;
   constructor(
     private actionSheetController: ActionSheetController,
     private alertController: AlertController,
@@ -109,8 +111,7 @@ export class TuSemanaPage implements OnInit {
   }
   refresh() {
     this.ejerciciosSeleccionados = [];
-    console.log('refresh');
-    console.log(this.ejerciciosSeleccionados);
+    this.ejerciciosInfo = [];
   }
   async presentToastSuccess() {
     const toast = await this.toastController.create({
@@ -143,9 +144,7 @@ export class TuSemanaPage implements OnInit {
       }, 2000);
     });
   }
-  async verMas(ejercicio: Ejercicios, event: Event) {
-    event.stopPropagation();
-  }
+
   crearRutina() {
     this.route.navigate(['/rutinas']);
   }
@@ -193,20 +192,39 @@ export class TuSemanaPage implements OnInit {
       this.route.navigate(['/auth']);
     });
   }
+  logCheckedInfo(ejercicio: Ejercicios) {
+    if (this.ejerciciosSeleccionados.includes(ejercicio)) {
+    } else {
+      if (this.ejerciciosInfo.includes(ejercicio)) {
+        this.ejerciciosInfo = this.ejerciciosInfo.filter(
+          (e) => e !== ejercicio
+        );
+      } else {
+        this.ejerciciosInfo.push(ejercicio);
+      }
+    }
+  }
+
   logCheckedExercise(ejercicio: Ejercicios, cantidadEj: number) {
     if (this.ejerciciosSeleccionados.includes(ejercicio)) {
       this.ejerciciosSeleccionados = this.ejerciciosSeleccionados.filter(
         (e) => e !== ejercicio
       );
+      // Si el ejercicio está en ejerciciosInfo, lo removemos
     } else {
       this.ejerciciosSeleccionados.push(ejercicio);
     }
-    console.log(this.ejerciciosSeleccionados);
-    console.log(cantidadEj);
+    if (this.ejerciciosInfo.includes(ejercicio)) {
+      this.ejerciciosInfo = this.ejerciciosInfo.filter((e) => e !== ejercicio);
+    }
     this.isRoutineComplete = this.ejerciciosSeleccionados.length === cantidadEj;
   }
+
   isSelected(ejercicio: Ejercicios) {
     return this.ejerciciosSeleccionados.includes(ejercicio);
+  }
+  isSelectedInfo(ejercicio: Ejercicios) {
+    return this.ejerciciosInfo.includes(ejercicio);
   }
   async presentToastFinish(msg: string, icon: string) {
     const toast = await this.toastController.create({
@@ -243,6 +261,7 @@ export class TuSemanaPage implements OnInit {
     const icon: string = 'checkmark';
 
     this.ejerciciosSeleccionados.forEach((ejercicio) => {
+  
       const rutinaPut = {
         idRutina: idRutina,
         idEjercicio: ejercicio.id,
@@ -253,7 +272,6 @@ export class TuSemanaPage implements OnInit {
 
       this.tusRutinas.editRutinaskg(this.userId, rutinaPut).subscribe(
         (data) => {
-          console.log('PERFE');
           this.presentToastFinish(msg, icon);
         },
         (error) => {

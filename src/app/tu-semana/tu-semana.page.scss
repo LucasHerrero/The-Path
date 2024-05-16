@@ -81,7 +81,6 @@ ion-card-subtitle {
     ion-label {
       padding: 0;
       margin: 0;
-
     }
 
     ion-input {
@@ -127,4 +126,34 @@ ion-card-subtitle {
 }
 .custom-loading .loading-wrapper {
   --background: var(--ion-color-primary);
+}
+@keyframes slideDown {
+  0% {
+    transform: translateY(-19%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.slideDown {
+  animation: slideDown 0.3s ease-in-out;
+}
+div.BefInf{
+  margin: 0px;
+  padding: 0px;
+  text-align: start;
+}
+.exerciseInfoSelected {
+  margin-bottom: 0px;
+text-align: start;
+  h3{
+    font-size: 1.2rem;
+    color: var(--ion-color-primary);
+
+  }
+
+  // color: #000;
+  // font-weight: bold;
+  // --background: #aefc41;
 }
