@@ -9,7 +9,9 @@ import {
 } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { IntJwtPayload } from '../auth/IntJwtPayload';
-import { Ejercicios } from '../rutinas/Ejercicios';
+import { ModalController } from '@ionic/angular';
+import { RutinasCreacionComponent } from '../rutinas/rutinas-creacion/rutinas-creacion.component';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-tus-rutinas',
@@ -22,13 +24,19 @@ export class TusRutinasPage implements OnInit {
   RutinaEjercicio: RutinaEjercicio[] = [];
   isAuthenticatedVar = true;
   noRutinas: boolean = true;
+  deleteButton: boolean = false;
+  deleteEjercicios: boolean = false;
+  rutinaSeleccionada: number[] = [];
+
   constructor(
     private tusRutinasService: TusRutinasService,
     private authService: AuthService,
     private alertController: AlertController,
     private route: Router,
     private actionSheetController: ActionSheetController,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private modalController: ModalController,
+    private storage: Storage
   ) {}
 
   ngOnInit() {
@@ -47,7 +55,7 @@ export class TusRutinasPage implements OnInit {
               this.dismissLoading();
               if (data.length == 0) {
                 this.noRutinas = true;
-              }else {
+              } else {
                 this.noRutinas = false;
               }
 
@@ -208,4 +216,46 @@ export class TusRutinasPage implements OnInit {
     });
     await actionSheet.present();
   }
+
+  editRutinaAbrirYCerrar() {
+    if (this.deleteButton == true && this.deleteEjercicios == true) {
+      this.deleteButton = false;
+      this.deleteEjercicios = false;
+    } else {
+      this.deleteButton = true;
+      this.deleteEjercicios = true;
+    }
+  }
+
+  deleteRutina(idRutina: number) {
+    console.log('idRutina', idRutina);
+  }
+
+  async addEjercicio() {
+    this.storage.create();
+    this.storage.set('rutina', true);
+    this.storage.set('cantidadEjercicios', 1);
+    const modal = await this.modalController.create({
+      component: RutinasCreacionComponent,
+    });
+    return await modal.present();
+  }
+
+  deleteEjercicio(idEjercicio: number) {
+    console.log(idEjercicio);
+  }
+
+  // logCheckedExercise(rutinaId: number) {
+  //   if (this.rutinaSeleccionada.includes(rutinaId)) {
+  //     this.rutinaSeleccionada = this.rutinaSeleccionada.filter(
+  //       (i) => i !== rutinaId
+  //     );
+  //     // Si el ejercicio está en ejerciciosInfo, lo removemos
+  //   } else {
+  //     this.rutinaSeleccionada.push(rutinaId);
+  //   }
+  // }
+  // isSelected(rutinaId: number) {
+  //   return this.rutinaSeleccionada.includes(rutinaId);
+  // }
 }

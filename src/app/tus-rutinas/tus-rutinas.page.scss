@@ -50,6 +50,7 @@ ion-card-subtitle {
   margin-top: 15px;
   margin-right: 20px;
   margin-left: 20px;
+  margin-bottom: 10px;
   box-shadow: 0px 0px 8px 4px #aefc41;
   .space {
     display: flex;
@@ -69,6 +70,7 @@ ion-card-subtitle {
   }
   .rutina2 {
     margin: 0px;
+
   }
 }
 
@@ -88,3 +90,60 @@ ion-label {
     margin-bottom: 20px;
   }
 }
+
+.edit {
+  display: flex;
+  justify-content: end;
+  margin: 0px;
+  padding: 0px;
+}
+
+.edit2 {
+  display: flex;
+  justify-content: space-between;
+  margin: 0px;
+  padding: 0px;
+
+}
+.ejercicio {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.deleteEj {
+  transition: 2s;
+  display: flex;
+  justify-content: center;
+align-items: center;
+padding-left: 20px;
+
+}
+
+
+.closeBtn {
+  padding-left: 15px;
+
+}
+
+
+@keyframes slideDown {
+  0% {
+    transform: translateX(19%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.slideDown {
+  animation: slideDown 0.3s ease-in-out;
+}
+.addEj {
+  border-top: solid white 2px;
+}
+
+.addEj:has(ion-icon) ion-icon{
+  font-size: 2.6rem;
+ margin-top: 35px;
+}
+

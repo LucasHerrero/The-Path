@@ -28,6 +28,7 @@ dia : string = "";
     await this.storage.remove('nombreRutina');
     await this.storage.remove('cantidadEjercicios');
     await this.storage.remove('dia');
+    await this.storage.remove('rutina');
   }
 
   async openModal() {
@@ -43,6 +44,7 @@ async guardarDatos(){
   await this.storage.set('nombreRutina', this.nombreRutina);
     await this.storage.set('cantidadEjercicios', this.cantidadEjercicios);
    await this.storage.set('dia', this.dia);
+   await this.storage.set('rutina', false);
 }
 
 public isFormIncomplete(): boolean {

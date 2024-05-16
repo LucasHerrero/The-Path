@@ -36,23 +36,59 @@
   <div class="rutina" *ngFor="let rutina of RutinaEjercicio">
     <div class="rutina2">
       <ion-card>
-        <ion-card-header>
-          <ion-card-title>{{rutina.Rutina.nombre}}</ion-card-title>
-          <ion-card-subtitle>{{rutina.Rutina.Dia}}</ion-card-subtitle>
-        </ion-card-header>
+        <div class="editSup">
+          <div *ngIf="!deleteButton" class="edit">
+            <ion-icon
+              (click)="editRutinaAbrirYCerrar()"
+              name="create-outline"
+              color="white"
+            ></ion-icon>
+          </div>
+          <div *ngIf="deleteButton" class="edit2 slideDown">
+            <!-- TODO: BOTON ELIMINAR -->
+            <ion-icon
+              (click)="deleteRutina(rutina.Rutina.id)"
+              *ngIf="deleteButton"
+              name="close-circle-outline"
+              color="danger"
+            ></ion-icon>
+            <!-- TODO: BOTON ELIMINAR -->
+
+            <ion-icon
+              class="closeBtn"
+              (click)="editRutinaAbrirYCerrar()"
+              name="close-circle"
+              color="white"
+            ></ion-icon>
+          </div>
+          <div class="header">
+            <ion-card-header>
+              <ion-card-title>{{rutina.Rutina.nombre}}</ion-card-title>
+              <ion-card-subtitle>{{rutina.Rutina.Dia}}</ion-card-subtitle>
+            </ion-card-header>
+          </div>
+        </div>
         <ion-card-content *ngFor="let ejercicio of rutina.Ejercicios">
-          <div class="space">
-            <div class="info">
-              <h2 style="font-weight: bolder; font-size: 1rem">
-                {{ejercicio.nombre}}
-              </h2>
-              <ion-chip>{{ejercicio.equipacion}}</ion-chip
-              ><ion-chip>{{ejercicio.musculo}}</ion-chip>
-              <ion-chip>{{ejercicio.dificultad}}</ion-chip>
+          <div class="ejercicio">
+            <div class="space">
+              <div class="info">
+                <h2 style="font-weight: bolder; font-size: 1rem">
+                  {{ejercicio.nombre}}
+                </h2>
+                <ion-chip>{{ejercicio.equipacion}}</ion-chip
+                ><ion-chip>{{ejercicio.musculo}}</ion-chip>
+                <ion-chip>{{ejercicio.dificultad}}</ion-chip>
+              </div>
+              <p>{{ejercicio.instrucciones}}</p>
             </div>
-            <p>{{ejercicio.instrucciones}}</p>
+            <div *ngIf="deleteEjercicios" class="deleteEj slideDown">
+              <ion-icon (click)="deleteEjercicio(ejercicio.id)" color="danger" name="remove-circle-outline"></ion-icon>
+            </div>
           </div>
         </ion-card-content>
+        <div *ngIf="deleteEjercicios" class="addEj slideDown">
+          <ion-icon (click)="addEjercicio()" slot="Añade mas ejercicios" name="add-circle-outline"></ion-icon>
+        </div>
       </ion-card>
     </div>
   </div>

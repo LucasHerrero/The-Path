@@ -200,6 +200,7 @@ export class RutinasCreacionComponent implements OnInit {
   async datosRutina1() {
     this.nombreRutina = await this.storage.get('nombreRutina');
     this.cantidadEjercicios = await this.storage.get('cantidadEjercicios');
+
     this.dia = await this.storage.get('dia');
     //Logica para sacar id.
     this.authService.isAuthenticated().then((isAuth) => {
@@ -297,37 +298,42 @@ export class RutinasCreacionComponent implements OnInit {
   }
 
   async guardarRutina() {
-    this.authService.isAuthenticated().then(async (isAuth) => {
-      if (isAuth) {
-        const data = {
-          nombre: this.nombreRutina,
-          cantidadEj: this.cantidadEjercicios,
-          Dia: this.dia,
-          userFk: this.user.userId,
+    const check: boolean = await this.storage.get('rutina');
+    if (check == true) {
+      console.log("Ya has creado una rutina");
+    } else {
+      this.authService.isAuthenticated().then(async (isAuth) => {
+        if (isAuth) {
+          const data = {
+            nombre: this.nombreRutina,
+            cantidadEj: this.cantidadEjercicios,
+            Dia: this.dia,
+            userFk: this.user.userId,
 
-          ejercicios: this.ejerciciosSeleccionados.map((e) => e.id),
-        };
+            ejercicios: this.ejerciciosSeleccionados.map((e) => e.id),
+          };
 
-        //POST
-        await this.rutinasCreacionService
-          .postRutina(data)
-          .then((response) => {
-            this.presentToastSuccess();
-            setTimeout(() => {
-              this.router.navigate(['/tus-rutinas']).then(() => {
-                location.reload();
-              });
-            }, 2000);
-          })
-          .catch((error) => {
-            this.presentToastError(error);
-          });
-        // location.reload();
-        this.modalController.dismiss();
-      } else {
-        this.logeate();
-        this.modalController.dismiss();
-      }
-    });
+          //POST
+          await this.rutinasCreacionService
+            .postRutina(data)
+            .then((response) => {
+              this.presentToastSuccess();
+              setTimeout(() => {
+                this.router.navigate(['/tus-rutinas']).then(() => {
+                  location.reload();
+                });
+              }, 2000);
+            })
+            .catch((error) => {
+              this.presentToastError(error);
+            });
+          // location.reload();
+          this.modalController.dismiss();
+        } else {
+          this.logeate();
+          this.modalController.dismiss();
+        }
+      });
+    }
   }
 }
