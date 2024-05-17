@@ -37,18 +37,18 @@
     <div class="rutina2">
       <ion-card>
         <div class="editSup">
-          <div *ngIf="!deleteButton" class="edit">
+          <div *ngIf="!isSelected(rutina.Rutina.id)" class="edit">
             <ion-icon
-              (click)="editRutinaAbrirYCerrar()"
+              (click)="logCheckedExercise(rutina.Rutina.id)"
               name="create-outline"
               color="white"
             ></ion-icon>
           </div>
-          <div *ngIf="deleteButton" class="edit2 slideDown">
+          <div *ngIf="isSelected(rutina.Rutina.id)" class="edit2 slideDown">
             <!-- TODO: BOTON ELIMINAR -->
             <ion-icon
               (click)="deleteRutina(rutina.Rutina.id)"
-              *ngIf="deleteButton"
+
               name="close-circle-outline"
               color="danger"
             ></ion-icon>
@@ -56,7 +56,7 @@
 
             <ion-icon
               class="closeBtn"
-              (click)="editRutinaAbrirYCerrar()"
+              (click)="logCheckedExercise(rutina.Rutina.id)"
               name="close-circle"
               color="white"
             ></ion-icon>
@@ -81,13 +81,13 @@
               </div>
               <p>{{ejercicio.instrucciones}}</p>
             </div>
-            <div *ngIf="deleteEjercicios" class="deleteEj slideDown">
+            <div *ngIf="isSelected(rutina.Rutina.id)" class="deleteEj slideDown">
               <ion-icon (click)="deleteEjercicio(ejercicio.id)" color="danger" name="remove-circle-outline"></ion-icon>
             </div>
           </div>
         </ion-card-content>
-        <div *ngIf="deleteEjercicios" class="addEj slideDown">
-          <ion-icon (click)="addEjercicio()" slot="Añade mas ejercicios" name="add-circle-outline"></ion-icon>
+        <div *ngIf="isSelected(rutina.Rutina.id)" class="addEj slideDown">
+          <ion-icon (click)="addEjercicio(rutina.Rutina.id)" slot="Añade mas ejercicios" name="add-circle-outline"></ion-icon>
         </div>
       </ion-card>
     </div>

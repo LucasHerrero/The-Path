@@ -13,6 +13,7 @@ import { ActionSheetController } from '@ionic/angular';
 import { AuthService } from 'src/app/auth/Auth.service';
 import { User } from '../User';
 import { IntJwtPayload } from 'src/app/auth/IntJwtPayload';
+import { TusRutinasService } from 'src/app/tus-rutinas/tus-rutinas.service';
 
 @Component({
   selector: 'app-rutinas-creacion',
@@ -40,12 +41,14 @@ export class RutinasCreacionComponent implements OnInit {
     private actionSheetController: ActionSheetController,
     private authService: AuthService,
     private toastController: ToastController,
-    private route: Router
+    private route: Router,
+    private tusRutinasService: TusRutinasService
   ) {
     this.datosRutina1();
   }
 
   ngOnInit() {
+
     this.isLoading = true;
     this.rutinasCreacionService.getEjercicios().subscribe(
       (data) => {
@@ -59,9 +62,9 @@ export class RutinasCreacionComponent implements OnInit {
     );
   }
 
-  async presentToastSuccess() {
+  async presentToastSuccess(msg : string) {
     const toast = await this.toastController.create({
-      message: 'Creacion de rutina exitosa',
+      message: msg,
       duration: 2000,
       color: 'success',
       position: 'top',
@@ -198,6 +201,8 @@ export class RutinasCreacionComponent implements OnInit {
     await alert.present();
   }
   async datosRutina1() {
+
+
     this.nombreRutina = await this.storage.get('nombreRutina');
     this.cantidadEjercicios = await this.storage.get('cantidadEjercicios');
 
@@ -299,8 +304,24 @@ export class RutinasCreacionComponent implements OnInit {
 
   async guardarRutina() {
     const check: boolean = await this.storage.get('rutina');
+    const ejercicioId = this.ejerciciosSeleccionados.map((e) => e.id);
     if (check == true) {
-      console.log("Ya has creado una rutina");
+      const idRutina = await this.storage.get('rutinaId');
+      console.log(idRutina, ejercicioId[0]);
+      this.tusRutinasService.addEjercicio(idRutina, ejercicioId[0]).subscribe(
+        (data) => {
+          this.presentToastSuccess('Ejercicio añadido a la rutina');
+          setTimeout(() => {
+            this.router.navigate(['/tus-rutinas']).then(() => {
+              location.reload();
+            });
+          }, 2000);
+        },
+        (error) => {
+          this.presentToastError(error);
+        }
+      );
+
     } else {
       this.authService.isAuthenticated().then(async (isAuth) => {
         if (isAuth) {
@@ -317,7 +338,7 @@ export class RutinasCreacionComponent implements OnInit {
           await this.rutinasCreacionService
             .postRutina(data)
             .then((response) => {
-              this.presentToastSuccess();
+              this.presentToastSuccess('Creacion de rutina exitosa');
               setTimeout(() => {
                 this.router.navigate(['/tus-rutinas']).then(() => {
                   location.reload();

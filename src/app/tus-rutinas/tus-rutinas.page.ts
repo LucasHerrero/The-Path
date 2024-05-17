@@ -6,6 +6,7 @@ import {
   ActionSheetController,
   AlertController,
   LoadingController,
+  ToastController,
 } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { IntJwtPayload } from '../auth/IntJwtPayload';
@@ -23,7 +24,7 @@ export class TusRutinasPage implements OnInit {
   idUser: number = 0;
   RutinaEjercicio: RutinaEjercicio[] = [];
   isAuthenticatedVar = true;
-  noRutinas: boolean = true;
+  noRutinas: boolean = false;
   deleteButton: boolean = false;
   deleteEjercicios: boolean = false;
   rutinaSeleccionada: number[] = [];
@@ -36,7 +37,8 @@ export class TusRutinasPage implements OnInit {
     private actionSheetController: ActionSheetController,
     private loadingController: LoadingController,
     private modalController: ModalController,
-    private storage: Storage
+    private storage: Storage,
+    private toastController: ToastController
   ) {}
 
   ngOnInit() {
@@ -216,23 +218,54 @@ export class TusRutinasPage implements OnInit {
     });
     await actionSheet.present();
   }
+  async presentToastFinish(msg: string, icon: string, color: string) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 5000,
+      color: color,
+      position: 'top',
+      buttons: [
+        {
+          side: 'start',
+          icon: icon,
+        },
+      ],
+    });
+    toast.present();
+  }
 
-  editRutinaAbrirYCerrar() {
-    if (this.deleteButton == true && this.deleteEjercicios == true) {
-      this.deleteButton = false;
-      this.deleteEjercicios = false;
+  logCheckedExercise(rutinaId: number) {
+    if (this.rutinaSeleccionada.includes(rutinaId)) {
+      this.rutinaSeleccionada = this.rutinaSeleccionada.filter(
+        (i) => i !== rutinaId
+      );
+      // Si el ejercicio está en ejerciciosInfo, lo removemos
     } else {
-      this.deleteButton = true;
-      this.deleteEjercicios = true;
+      this.rutinaSeleccionada.push(rutinaId);
     }
   }
-
-  deleteRutina(idRutina: number) {
-    console.log('idRutina', idRutina);
+  isSelected(rutinaId: number) {
+    return this.rutinaSeleccionada.includes(rutinaId);
   }
 
-  async addEjercicio() {
+
+  deleteRutina(idRutina: number) {
+    this.tusRutinasService.deleteRutinas(idRutina).subscribe(
+      (data) => {
+        this.presentToastFinish(data.message, 'trash', 'success');
+        setTimeout(() => {
+          location.reload();
+        }, 2000);
+      },
+      (error) => {
+        this.presentToastFinish(error.message, 'close-circle', 'danger');
+      }
+    );
+  }
+
+  async addEjercicio(idRutina :number) {
     this.storage.create();
+    this.storage.set('rutinaId', idRutina);
     this.storage.set('rutina', true);
     this.storage.set('cantidadEjercicios', 1);
     const modal = await this.modalController.create({
@@ -244,18 +277,4 @@ export class TusRutinasPage implements OnInit {
   deleteEjercicio(idEjercicio: number) {
     console.log(idEjercicio);
   }
-
-  // logCheckedExercise(rutinaId: number) {
-  //   if (this.rutinaSeleccionada.includes(rutinaId)) {
-  //     this.rutinaSeleccionada = this.rutinaSeleccionada.filter(
-  //       (i) => i !== rutinaId
-  //     );
-  //     // Si el ejercicio está en ejerciciosInfo, lo removemos
-  //   } else {
-  //     this.rutinaSeleccionada.push(rutinaId);
-  //   }
-  // }
-  // isSelected(rutinaId: number) {
-  //   return this.rutinaSeleccionada.includes(rutinaId);
-  // }
 }

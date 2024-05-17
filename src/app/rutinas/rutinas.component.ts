@@ -29,6 +29,7 @@ dia : string = "";
     await this.storage.remove('cantidadEjercicios');
     await this.storage.remove('dia');
     await this.storage.remove('rutina');
+    await this.storage.remove('ejercicio');
   }
 
   async openModal() {

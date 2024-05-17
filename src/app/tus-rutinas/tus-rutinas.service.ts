@@ -38,7 +38,14 @@ export class TusRutinasService {
     return this.http.put(`${this.url}/rutinaEjercicioKg/${idUser}`, body);
   }
 
-  deleteRutinas(idRutina: number) {
+  deleteRutinas(idRutina: number) : Observable<any>{
     return this.http.delete(`${this.url}/rutinas/${idRutina}`);
+  }
+
+  addEjercicio(idRutina: number, idEjercicio:number) : Observable<any>{
+    const data = {
+      idEjercicio : idEjercicio
+    }
+    return this.http.post(`${this.url}/addEjercicio/${idRutina}`,data);
   }
 }
