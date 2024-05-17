@@ -56,7 +56,7 @@ export class TuSemanaPage implements OnInit {
     this.selectedDay = days[currentDay] as dia;
   }
   ngOnInit() {
-    this.presentLoading();
+
     var days2 = [
       'Domingo',
       'Lunes',
@@ -67,7 +67,9 @@ export class TuSemanaPage implements OnInit {
       'Sabado',
     ];
     this.authService.isAuthenticated().then((isAuthenticated) => {
+
       if (isAuthenticated) {
+        this.presentLoading();
         this.isAuthenticatedVar = true;
 
         this.authService.decodeToken().then((decodedToken: IntJwtPayload) => {
@@ -96,7 +98,10 @@ export class TuSemanaPage implements OnInit {
           );
         });
       }
+
+
     });
+
   }
   async presentLoading() {
     const loading = await this.loadingController.create({
@@ -261,7 +266,7 @@ export class TuSemanaPage implements OnInit {
     const icon: string = 'checkmark';
 
     this.ejerciciosSeleccionados.forEach((ejercicio) => {
-  
+
       const rutinaPut = {
         idRutina: idRutina,
         idEjercicio: ejercicio.id,
