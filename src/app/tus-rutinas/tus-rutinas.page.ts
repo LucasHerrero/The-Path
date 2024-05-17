@@ -280,25 +280,24 @@ export class TusRutinasPage implements OnInit {
         this.authService.isAuthenticated().then((isAuthenticated) => {
           if (isAuthenticated) {
             this.isAuthenticatedVar = true;
-            this.authService.decodeToken().then((decodedToken: IntJwtPayload) => {
-              console.log('idToken', decodedToken.userId);
-              this.idUser = decodedToken.userId;
+            this.authService
+              .decodeToken()
+              .then((decodedToken: IntJwtPayload) => {
+                this.idUser = decodedToken.userId;
 
-              this.tusRutinasService
-                .getTusRutinas(decodedToken.userId)
-                .subscribe((data) => {
-                  console.log(data);
-                  this.dismissLoading();
-                  if (data.length == 0) {
-                    this.noRutinas = true;
-                  } else {
-                    this.noRutinas = false;
-                  }
+                this.tusRutinasService
+                  .getTusRutinas(decodedToken.userId)
+                  .subscribe((data2) => {
 
-                  this.RutinaEjercicio = data;
-                  this.RutinaEjercicioORG = data;
-                });
-            });
+                    if (data2.length == 0) {
+                      this.noRutinas = true;
+                    } else {
+                      this.noRutinas = false;
+                    }
+
+                    this.RutinaEjercicio = data2;
+                  });
+              });
           }
         });
       },

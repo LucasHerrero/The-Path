@@ -26,6 +26,7 @@ export class RutinasCreacionService {
   }
 
   postRutina(data: any) {
+    console.log(data);
     return this.http
       .post(this.url + `/crearRutina`, data)
       .toPromise()

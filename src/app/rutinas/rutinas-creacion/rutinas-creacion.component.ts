@@ -327,7 +327,7 @@ export class RutinasCreacionComponent implements OnInit {
         if (isAuth) {
           const data = {
             nombre: this.nombreRutina,
-            cantidadEj: this.cantidadEjercicios,
+            cantidadEj: this.ejerciciosSeleccionados.length,
             Dia: this.dia,
             userFk: this.user.userId,
 
