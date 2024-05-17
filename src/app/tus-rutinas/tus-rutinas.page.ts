@@ -248,7 +248,6 @@ export class TusRutinasPage implements OnInit {
     return this.rutinaSeleccionada.includes(rutinaId);
   }
 
-
   deleteRutina(idRutina: number) {
     this.tusRutinasService.deleteRutinas(idRutina).subscribe(
       (data) => {
@@ -263,7 +262,7 @@ export class TusRutinasPage implements OnInit {
     );
   }
 
-  async addEjercicio(idRutina :number) {
+  async addEjercicio(idRutina: number) {
     this.storage.create();
     this.storage.set('rutinaId', idRutina);
     this.storage.set('rutina', true);
@@ -274,7 +273,38 @@ export class TusRutinasPage implements OnInit {
     return await modal.present();
   }
 
-  deleteEjercicio(idEjercicio: number) {
-    console.log(idEjercicio);
+  deleteEjercicio(idRutina: number, idEjercicio: number) {
+    this.tusRutinasService.deleteEjercicio(idRutina, idEjercicio).subscribe(
+      (data) => {
+        this.presentToastFinish(data.message, 'trash', 'success');
+        this.authService.isAuthenticated().then((isAuthenticated) => {
+          if (isAuthenticated) {
+            this.isAuthenticatedVar = true;
+            this.authService.decodeToken().then((decodedToken: IntJwtPayload) => {
+              console.log('idToken', decodedToken.userId);
+              this.idUser = decodedToken.userId;
+
+              this.tusRutinasService
+                .getTusRutinas(decodedToken.userId)
+                .subscribe((data) => {
+                  console.log(data);
+                  this.dismissLoading();
+                  if (data.length == 0) {
+                    this.noRutinas = true;
+                  } else {
+                    this.noRutinas = false;
+                  }
+
+                  this.RutinaEjercicio = data;
+                  this.RutinaEjercicioORG = data;
+                });
+            });
+          }
+        });
+      },
+      (error) => {
+        this.presentToastFinish(error.message, 'close-circle', 'danger');
+      }
+    );
   }
 }

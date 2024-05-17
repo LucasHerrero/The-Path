@@ -38,14 +38,18 @@ export class TusRutinasService {
     return this.http.put(`${this.url}/rutinaEjercicioKg/${idUser}`, body);
   }
 
-  deleteRutinas(idRutina: number) : Observable<any>{
+  deleteRutinas(idRutina: number): Observable<any> {
     return this.http.delete(`${this.url}/rutinas/${idRutina}`);
   }
 
-  addEjercicio(idRutina: number, idEjercicio:number) : Observable<any>{
+  addEjercicio(idRutina: number, idEjercicio: number): Observable<any> {
     const data = {
-      idEjercicio : idEjercicio
-    }
-    return this.http.post(`${this.url}/addEjercicio/${idRutina}`,data);
+      idEjercicio: idEjercicio,
+    };
+    return this.http.post(`${this.url}/addEjercicio/${idRutina}`, data);
+  }
+
+  deleteEjercicio(idRutina: number, idEjercicio: number): Observable<any> {
+    return this.http.delete(`${this.url}/deleteEjercicio/${idRutina}/${idEjercicio}`);
   }
 }

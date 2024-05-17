@@ -82,7 +82,7 @@
               <p>{{ejercicio.instrucciones}}</p>
             </div>
             <div *ngIf="isSelected(rutina.Rutina.id)" class="deleteEj slideDown">
-              <ion-icon (click)="deleteEjercicio(ejercicio.id)" color="danger" name="remove-circle-outline"></ion-icon>
+              <ion-icon (click)="deleteEjercicio(rutina.Rutina.id,ejercicio.id)" color="danger" name="remove-circle-outline"></ion-icon>
             </div>
           </div>
         </ion-card-content>
