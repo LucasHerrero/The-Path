@@ -252,9 +252,32 @@ export class TusRutinasPage implements OnInit {
     this.tusRutinasService.deleteRutinas(idRutina).subscribe(
       (data) => {
         this.presentToastFinish(data.message, 'trash', 'success');
-        setTimeout(() => {
-          location.reload();
-        }, 2000);
+        this.authService.isAuthenticated().then((isAuthenticated) => {
+          if (isAuthenticated) {
+            this.isAuthenticatedVar = true;
+            this.authService
+              .decodeToken()
+              .then((decodedToken: IntJwtPayload) => {
+                this.idUser = decodedToken.userId;
+
+                this.tusRutinasService
+                  .getTusRutinas(decodedToken.userId)
+                  .subscribe((data2) => {
+
+                    if (data2.length == 0) {
+                      this.noRutinas = true;
+                    } else {
+                      this.noRutinas = false;
+                    }
+
+                    this.RutinaEjercicio = data2;
+                  });
+              });
+          }
+        });
+
+
+
       },
       (error) => {
         this.presentToastFinish(error.message, 'close-circle', 'danger');
