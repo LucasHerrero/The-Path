@@ -220,6 +220,8 @@ export class TusRutinasPage implements OnInit {
     });
     await actionSheet.present();
   }
+
+
   async presentToastFinish(msg: string, icon: string, color: string) {
     const toast = await this.toastController.create({
       message: msg,
@@ -287,6 +289,8 @@ export class TusRutinasPage implements OnInit {
     );
   }
 
+
+
   async addEjercicio(idRutina: number) {
     this.storage.create();
     this.storage.set('rutinaId', idRutina);
@@ -297,6 +301,8 @@ export class TusRutinasPage implements OnInit {
     });
     return await modal.present();
   }
+
+
 
   deleteEjercicio(idRutina: number, idEjercicio: number) {
     this.tusRutinasService.deleteEjercicio(idRutina, idEjercicio).subscribe(
