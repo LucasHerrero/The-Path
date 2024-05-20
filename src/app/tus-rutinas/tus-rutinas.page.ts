@@ -14,6 +14,7 @@ import { ModalController } from '@ionic/angular';
 import { RutinasCreacionComponent } from '../rutinas/rutinas-creacion/rutinas-creacion.component';
 import { Storage } from '@ionic/storage-angular';
 
+
 @Component({
   selector: 'app-tus-rutinas',
   templateUrl: './tus-rutinas.page.html',
@@ -70,7 +71,29 @@ export class TusRutinasPage implements OnInit {
       }
     });
   }
+  async confirmDelete(idRutina: number) {
+    const alert = await this.alertController.create({
+      header: 'Confirmar',
+      message: '¿Estás seguro de que quieres eliminar esta rutina?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Eliminar',
+          handler: () => {
+            this.deleteRutina(idRutina);
+          }
+        }
+      ]
+    });
 
+    await alert.present();
+  }
   async presentLoading() {
     const loading = await this.loadingController.create({
       message: 'Cargando...',

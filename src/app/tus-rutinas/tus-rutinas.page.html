@@ -53,7 +53,7 @@
             <div *ngIf="isSelected(rutina.Rutina.id)" class="edit2 slideDown">
               <!-- TODO: BOTON ELIMINAR -->
               <ion-icon
-                (click)="deleteRutina(rutina.Rutina.id)"
+                (click)="confirmDelete(rutina.Rutina.id)"
                 name="close-circle-outline"
                 color="danger"
               ></ion-icon>
