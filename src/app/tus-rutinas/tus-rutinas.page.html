@@ -16,80 +16,97 @@
       >
     </ion-col>
   </ion-row>
-  <div class="noRutinas" *ngIf="noRutinas">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>
-          Crea una rutina para empezar a entrenar
-        </ion-card-title>
-      </ion-card-header>
-      <ion-button
-        routerLink="/rutinas"
-        expand="block"
-        fill="outline"
-        color="primary"
-      >
-        Crea tu rutina
-      </ion-button>
-    </ion-card>
+  <div *ngIf="!isAuthenticatedVar">
+    <ion-button (click)="logeate()" expand="block" fill="clear" shape="round">
+      Logeate
+    </ion-button>
   </div>
-  <div class="rutina" *ngFor="let rutina of RutinaEjercicio">
-    <div class="rutina2">
+  <div *ngIf="isAuthenticatedVar">
+    <div class="noRutinas" *ngIf="noRutinas">
       <ion-card>
-        <div class="editSup">
-          <div *ngIf="!isSelected(rutina.Rutina.id)" class="edit">
-            <ion-icon
-              (click)="logCheckedExercise(rutina.Rutina.id)"
-              name="create-outline"
-              color="white"
-            ></ion-icon>
-          </div>
-          <div *ngIf="isSelected(rutina.Rutina.id)" class="edit2 slideDown">
-            <!-- TODO: BOTON ELIMINAR -->
-            <ion-icon
-              (click)="deleteRutina(rutina.Rutina.id)"
-
-              name="close-circle-outline"
-              color="danger"
-            ></ion-icon>
-            <!-- TODO: BOTON ELIMINAR -->
-
-            <ion-icon
-              class="closeBtn"
-              (click)="logCheckedExercise(rutina.Rutina.id)"
-              name="close-circle"
-              color="white"
-            ></ion-icon>
-          </div>
-          <div class="header">
-            <ion-card-header>
-              <ion-card-title>{{rutina.Rutina.nombre}}</ion-card-title>
-              <ion-card-subtitle>{{rutina.Rutina.Dia}}</ion-card-subtitle>
-            </ion-card-header>
-          </div>
-        </div>
-        <ion-card-content *ngFor="let ejercicio of rutina.Ejercicios">
-          <div class="ejercicio">
-            <div class="space">
-              <div class="info">
-                <h2 style="font-weight: bolder; font-size: 1rem">
-                  {{ejercicio.nombre}}
-                </h2>
-                <ion-chip>{{ejercicio.equipacion}}</ion-chip
-                ><ion-chip>{{ejercicio.musculo}}</ion-chip>
-                <ion-chip>{{ejercicio.dificultad}}</ion-chip>
-              </div>
-              <p>{{ejercicio.instrucciones}}</p>
-            </div>
-            <div *ngIf="isSelected(rutina.Rutina.id)" class="deleteEj slideDown">
-              <ion-icon (click)="deleteEjercicio(rutina.Rutina.id,ejercicio.id)" color="danger" name="remove-circle-outline"></ion-icon>
-            </div>
-          </div>
-        </ion-card-content>
-        <div *ngIf="isSelected(rutina.Rutina.id)" class="addEj slideDown">
-          <ion-icon (click)="addEjercicio(rutina.Rutina.id)" slot="Añade mas ejercicios" name="add-circle-outline"></ion-icon>
-        </div>
+        <ion-card-header>
+          <ion-card-title>
+            Crea una rutina para empezar a entrenar
+          </ion-card-title>
+        </ion-card-header>
+        <ion-button
+          routerLink="/rutinas"
+          expand="block"
+          fill="outline"
+          color="primary"
+        >
+          Crea tu rutina
+        </ion-button>
       </ion-card>
+    </div>
+    <div class="rutina" *ngFor="let rutina of RutinaEjercicio">
+      <div class="rutina2">
+        <ion-card>
+          <div class="editSup">
+            <div *ngIf="!isSelected(rutina.Rutina.id)" class="edit">
+              <ion-icon
+                (click)="logCheckedExercise(rutina.Rutina.id)"
+                name="create-outline"
+                color="white"
+              ></ion-icon>
+            </div>
+            <div *ngIf="isSelected(rutina.Rutina.id)" class="edit2 slideDown">
+              <!-- TODO: BOTON ELIMINAR -->
+              <ion-icon
+                (click)="deleteRutina(rutina.Rutina.id)"
+                name="close-circle-outline"
+                color="danger"
+              ></ion-icon>
+              <!-- TODO: BOTON ELIMINAR -->
+
+              <ion-icon
+                class="closeBtn"
+                (click)="logCheckedExercise(rutina.Rutina.id)"
+                name="close-circle"
+                color="white"
+              ></ion-icon>
+            </div>
+            <div class="header">
+              <ion-card-header>
+                <ion-card-title>{{rutina.Rutina.nombre}}</ion-card-title>
+                <ion-card-subtitle>{{rutina.Rutina.Dia}}</ion-card-subtitle>
+              </ion-card-header>
+            </div>
+          </div>
+          <ion-card-content *ngFor="let ejercicio of rutina.Ejercicios">
+            <div class="ejercicio">
+              <div class="space">
+                <div class="info">
+                  <h2 style="font-weight: bolder; font-size: 1rem">
+                    {{ejercicio.nombre}}
+                  </h2>
+                  <ion-chip>{{ejercicio.equipacion}}</ion-chip
+                  ><ion-chip>{{ejercicio.musculo}}</ion-chip>
+                  <ion-chip>{{ejercicio.dificultad}}</ion-chip>
+                </div>
+                <p>{{ejercicio.instrucciones}}</p>
+              </div>
+              <div
+                *ngIf="isSelected(rutina.Rutina.id)"
+                class="deleteEj slideDown"
+              >
+                <ion-icon
+                  (click)="deleteEjercicio(rutina.Rutina.id,ejercicio.id)"
+                  color="danger"
+                  name="remove-circle-outline"
+                ></ion-icon>
+              </div>
+            </div>
+          </ion-card-content>
+          <div *ngIf="isSelected(rutina.Rutina.id)" class="addEj slideDown">
+            <ion-icon
+              (click)="addEjercicio(rutina.Rutina.id)"
+              slot="Añade mas ejercicios"
+              name="add-circle-outline"
+            ></ion-icon>
+          </div>
+        </ion-card>
+      </div>
     </div>
   </div>
 </ion-content>

@@ -23,7 +23,7 @@ export class TusRutinasPage implements OnInit {
   RutinaEjercicioORG: RutinaEjercicio[] = [];
   idUser: number = 0;
   RutinaEjercicio: RutinaEjercicio[] = [];
-  isAuthenticatedVar = true;
+  isAuthenticatedVar = false;
   noRutinas: boolean = false;
   deleteButton: boolean = false;
   deleteEjercicios: boolean = false;
@@ -42,9 +42,11 @@ export class TusRutinasPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.presentLoading();
+
     this.authService.isAuthenticated().then((isAuthenticated) => {
+
       if (isAuthenticated) {
+        this.presentLoading();
         this.isAuthenticatedVar = true;
         this.authService.decodeToken().then((decodedToken: IntJwtPayload) => {
           console.log('idToken', decodedToken.userId);
