@@ -318,7 +318,7 @@ export class TusRutinasPage implements OnInit {
     this.storage.create();
     this.storage.set('rutinaId', idRutina);
     this.storage.set('rutina', true);
-    this.storage.set('cantidadEjercicios', 1);
+    this.storage.set('cantidadEjercicios', 6);
     const modal = await this.modalController.create({
       component: RutinasCreacionComponent,
     });

@@ -307,8 +307,8 @@ export class RutinasCreacionComponent implements OnInit {
     const ejercicioId = this.ejerciciosSeleccionados.map((e) => e.id);
     if (check == true) {
       const idRutina = await this.storage.get('rutinaId');
-      console.log(idRutina, ejercicioId[0]);
-      this.tusRutinasService.addEjercicio(idRutina, ejercicioId[0]).subscribe(
+      console.log(idRutina, ejercicioId);
+      this.tusRutinasService.addEjercicio(idRutina, ejercicioId).subscribe(
         (data) => {
           this.presentToastSuccess('Ejercicio añadido a la rutina');
           setTimeout(() => {
