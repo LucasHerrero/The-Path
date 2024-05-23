@@ -5,5 +5,5 @@ export interface User {
   birthday:          Date | null;
   height:            number | null;
   kg:                number | null;
-imagen:           string | null;
+  registration_date: Date;
 }

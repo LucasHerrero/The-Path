@@ -1,57 +1,87 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Header</ion-title>
+    <ion-title>Perfil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="editProfile()">Guardar</ion-button>
+    </ion-buttons>
   </ion-toolbar>
-  <ion-avatar>
-    <img
-      alt="Silhouette of a person's head"
-      src="https://ionicframework.com/docs/img/demos/avatar.svg"
-    />
-  </ion-avatar>
-  <ion-button expand="block" fill="clear" shape="round">
-    Cambiar foto
-  </ion-button>
 </ion-header>
 <ion-content>
-  <ion-note> Tus datos </ion-note>
+  <h2 class="tusDatos"> Tus datos </h2>
   <div class="inputs">
     <div class="input">
       <ion-label>Nombre: </ion-label>
-      <ion-input type="text" placeholder="Ej: Juan"></ion-input>
+      <ion-input
+        type="text"
+        [(ngModel)]="User.username"
+        placeholder="Ej: Juan"
+      ></ion-input>
     </div>
   </div>
   <div class="inputs">
     <div class="input">
       <ion-label>Correo electronico: </ion-label>
-      <ion-input type="email" placeholder="Ej: juan@gmail.com"></ion-input>
+      <ion-input
+        type="email"
+        [(ngModel)]="User.email"
+        placeholder="Ej: juan@gmail.com"
+      ></ion-input>
     </div>
   </div>
-  <div class="inputs">
-    <div class="input">
-      <ion-label>Fecha de nacimiento: </ion-label>
-      <ion-input type="date" placeholder="99/99/999"></ion-input>
-    </div>
-  </div>
-  <div class="inputs">
-    <div class="input">
-      <ion-label>Sexo: </ion-label>
-      <ion-input type="text" placeholder="Ej: Hombre"></ion-input>
-    </div>
-  </div>
+
   <div class="inputs">
     <div class="input">
       <ion-label>Peso: (KG)</ion-label>
-      <ion-input type="number" placeholder="Ej: 80"></ion-input>
+      <ion-input
+        type="number"
+        [(ngModel)]="User.kg"
+        placeholder="Ej: 80"
+      ></ion-input>
     </div>
   </div>
   <div class="inputs">
     <div class="input">
       <ion-label>Altura: (CM)</ion-label>
-      <ion-input type="number" placeholder="Ej: 183"></ion-input>
+      <ion-input
+        type="number"
+        [(ngModel)]="User.height"
+        placeholder="Ej: 183"
+      ></ion-input>
     </div>
   </div>
-  <ion-button (click)="confirmDelete()" expand="block" fill="clear" shape="round">
-    Cerrar Sesion
-  </ion-button>
+  <div class="inputs">
+    <div class="input">
+      <ion-item>
+        <div class="date">
+          <ion-label>Fecha de nacimiento: </ion-label>
+          <ion-datetime-button datetime="datetime"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime
+                id="datetime"
+                presentation="date"
+                [preferWheel]="true"
+                displayFormat="YYYY:MM:DD"
+                [(ngModel)]="User.birthday"
+              ></ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </div>
+      </ion-item>
+    </div>
+  </div>
 
+  <div class="btnCerrar">
+    <ion-button
+      (click)="confirmDelete()"
+      expand="block"
+      fill="clear"
+      shape="round"
+    >
+      Cerrar Sesion
+    </ion-button>
+  </div>
+  <ion-button class="editPass" expand="block" fill="outline" shape="border">
+    Editar contraseña
+  </ion-button>
 </ion-content>

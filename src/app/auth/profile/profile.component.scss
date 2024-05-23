@@ -1,19 +1,18 @@
-ion-header{
+ion-header {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  ion-avatar{
+  ion-avatar {
     height: 100px;
     width: 100px;
     margin-top: 20px;
   }
-  }
-.inputs{
+}
+.inputs {
   display: flex;
   flex-direction: column;
-
 }
 .input {
   padding: 15px 20px;
@@ -22,14 +21,55 @@ ion-header{
   border-bottom: 2px solid #ffffff90;
   align-items: center;
   justify-content: center;
-   ion-label{
+  ion-label {
     margin-right: 20px;
-   }
+  }
 }
-ion-note{
+ion-note {
   color: #ffffff90;
-  margin: 10px;
+  margin: 30px;
 }
-ion-content{
+ion-content {
   height: 80vh;
+}
+
+.btnCerrar {
+  margin-top: 15px;
+}
+
+ion-datetime {
+  --background: rgb(255, 255, 255);
+  --background-rgb: 162, 162, 162;
+  --wheel-highlight-background: var(--ion-color-primary);
+  --wheel-highlight-border-radius: 48px;
+  --wheel-fade-background-rgb: 245, 235, 247;
+}
+
+ion-datetime::part(wheel-item) {
+  color: rgb(0, 0, 0);
+}
+
+ion-datetime::part(wheel-item active) {
+  color: rgb(128, 30, 171);
+}
+.date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  ion-label {
+    margin: 15px;
+  }
+}
+
+.editPass {
+  padding: 0px 20px;
+  margin-top: 15px;
+}
+.tusDatos {
+  display: flex;
+  justify-content: center;
+  margin: 35px 0px;
+  color: var(--ion-color-primary);
 }
