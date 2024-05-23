@@ -1,3 +1,26 @@
-<p>
-  home works!
-</p>
+<ion-content>
+  <ion-text>
+    <h1>{{selectedDay}}</h1>
+  </ion-text>
+<div class="label">
+  <sub>Hoy Toca...</sub>
+</div>
+  <div class="cardDay">
+    <div class="noRutinas" *ngIf="noRutinas">
+      <p>No tienes rutinas para hoy</p>
+      <sub></sub>
+      <ion-icon routerLink="/tu-semana" slot="start" name="add-circle-outline"></ion-icon>
+    </div>
+    <div *ngIf="!noRutinas" class="txtCard">
+      <h3>{{Rutina.nombre }}</h3>
+    </div>
+    <div *ngIf="!noRutinas" class="textIcon">
+      <div class="btnCard">
+        <h3>Comenzar</h3>
+      </div>
+      <div class="icono">
+        <ion-icon routerLink="/tu-semana" name="play-circle-outline"></ion-icon>
+      </div>
+    </div>
+  </div>
+</ion-content>

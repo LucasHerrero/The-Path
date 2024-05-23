@@ -1,0 +1,35 @@
+ion-header{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  ion-avatar{
+    height: 100px;
+    width: 100px;
+    margin-top: 20px;
+  }
+  }
+.inputs{
+  display: flex;
+  flex-direction: column;
+
+}
+.input {
+  padding: 15px 20px;
+  margin: 5px 20px;
+  display: flex;
+  border-bottom: 2px solid #ffffff90;
+  align-items: center;
+  justify-content: center;
+   ion-label{
+    margin-right: 20px;
+   }
+}
+ion-note{
+  color: #ffffff90;
+  margin: 10px;
+}
+ion-content{
+  height: 80vh;
+}

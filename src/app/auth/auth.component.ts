@@ -21,7 +21,7 @@ export class AuthComponent {
   height: string = '';
   kg: string = '';
   isLoggedIn: boolean = false;
-  isLoginView = true; 
+  isLoginView = true;
 
   constructor(
     private authService: AuthService,
@@ -92,21 +92,7 @@ export class AuthComponent {
       console.error('Error during checking storage', error);
     }
   }
-  // async presentToast() {
-  //   const toast = await this.toastController.create({
-  //     message: 'Inicio de sesión exitoso.',
-  //     duration: 2000,
-  //     color: 'success',
-  //     position: 'top',
-  //     buttons: [
-  //       {
-  //         side: 'start',
-  //         icon: 'checkmark',
-  //       },
-  //     ],
-  //   });
-  //   toast.present();
-  // }
+
 
   async registerUser() {
     const user = {

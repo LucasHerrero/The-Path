@@ -4,12 +4,17 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Rutina, dia } from '../rutinas/Rutina';
 @Injectable({
   providedIn: 'root',
 })
 export class TusRutinasService {
   url = environment.apiUrl;
   constructor(public http: HttpClient) {}
+
+  getRutinaByDayAndUser(idUser: number, day: dia): Observable<Rutina[]> {
+    return this.http.get<Rutina[]>(`${this.url}/rutina/day/${idUser}/${day}`);
+  }
 
   getTusRutinas(id: number): Observable<RutinaEjercicio[]> {
     return this.http.get<RutinaEjercicio[]>(
@@ -50,6 +55,8 @@ export class TusRutinasService {
   }
 
   deleteEjercicio(idRutina: number, idEjercicio: number): Observable<any> {
-    return this.http.delete(`${this.url}/deleteEjercicio/${idRutina}/${idEjercicio}`);
+    return this.http.delete(
+      `${this.url}/deleteEjercicio/${idRutina}/${idEjercicio}`
+    );
   }
 }

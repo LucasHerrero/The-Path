@@ -1,17 +1,57 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>Tu cuenta</ion-title>
+    <ion-title>Header</ion-title>
   </ion-toolbar>
+  <ion-avatar>
+    <img
+      alt="Silhouette of a person's head"
+      src="https://ionicframework.com/docs/img/demos/avatar.svg"
+    />
+  </ion-avatar>
+  <ion-button expand="block" fill="clear" shape="round">
+    Cambiar foto
+  </ion-button>
 </ion-header>
-
 <ion-content>
-<ion-text>
-  <h1>Bienvenido "{{User.username}}"  👋👋</h1>
-</ion-text>
-</ion-content>
-
-
-  <ion-button (click)="closeSession()" expand="block" fill="clear" shape="round">
-    Cerrar sesión
+  <ion-note> Tus datos </ion-note>
+  <div class="inputs">
+    <div class="input">
+      <ion-label>Nombre: </ion-label>
+      <ion-input type="text" placeholder="Ej: Juan"></ion-input>
+    </div>
+  </div>
+  <div class="inputs">
+    <div class="input">
+      <ion-label>Correo electronico: </ion-label>
+      <ion-input type="email" placeholder="Ej: juan@gmail.com"></ion-input>
+    </div>
+  </div>
+  <div class="inputs">
+    <div class="input">
+      <ion-label>Fecha de nacimiento: </ion-label>
+      <ion-input type="date" placeholder="99/99/999"></ion-input>
+    </div>
+  </div>
+  <div class="inputs">
+    <div class="input">
+      <ion-label>Sexo: </ion-label>
+      <ion-input type="text" placeholder="Ej: Hombre"></ion-input>
+    </div>
+  </div>
+  <div class="inputs">
+    <div class="input">
+      <ion-label>Peso: (KG)</ion-label>
+      <ion-input type="number" placeholder="Ej: 80"></ion-input>
+    </div>
+  </div>
+  <div class="inputs">
+    <div class="input">
+      <ion-label>Altura: (CM)</ion-label>
+      <ion-input type="number" placeholder="Ej: 183"></ion-input>
+    </div>
+  </div>
+  <ion-button (click)="confirmDelete()" expand="block" fill="clear" shape="round">
+    Cerrar Sesion
   </ion-button>
 
+</ion-content>
