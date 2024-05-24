@@ -1,26 +1,55 @@
 <ion-content>
   <ion-text>
-    <h1>{{selectedDay}}</h1>
+    <h1>{{ selectedDay }}</h1>
   </ion-text>
-<div class="label">
-  <sub>Hoy Toca...</sub>
-</div>
-  <div class="cardDay">
-    <div class="noRutinas" *ngIf="noRutinas">
-      <p>No tienes rutinas para hoy</p>
-      <sub></sub>
-      <ion-icon routerLink="/tu-semana" slot="start" name="add-circle-outline"></ion-icon>
-    </div>
-    <div *ngIf="!noRutinas" class="txtCard">
-      <h3>{{Rutina.nombre }}</h3>
-    </div>
-    <div *ngIf="!noRutinas" class="textIcon">
-      <div class="btnCard">
-        <h3>Comenzar</h3>
+  <div class="home">
+    <div>
+      <div class="label">
+        <sub>Hoy Toca...</sub>
       </div>
-      <div class="icono">
-        <ion-icon routerLink="/tu-semana" name="play-circle-outline"></ion-icon>
+      <div class="cardDay" *ngIf="isAuthenticatedVar">
+        <div class="noRutinas" *ngIf="noRutinas">
+          <p>No tienes rutinas para hoy</p>
+          <sub></sub>
+          <ion-icon
+            routerLink="/tu-semana"
+            slot="start"
+            name="add-circle-outline"
+          ></ion-icon>
+        </div>
+        <div *ngIf="!noRutinas" class="txtCard">
+          <h3>{{ Rutina.nombre }}</h3>
+        </div>
+        <div *ngIf="!noRutinas" class="textIcon">
+          <div class="btnCard">
+            <h3>Comenzar</h3>
+          </div>
+          <div class="icono">
+            <ion-icon
+              routerLink="/tu-semana"
+              name="play-circle-outline"
+            ></ion-icon>
+          </div>
+        </div>
       </div>
+      <div class="cardDay" *ngIf="!isAuthenticatedVar">
+        <div class="noRutinas">
+          <p>Debes iniciar sesión para desbloquear todas las funcionalidades</p>
+          <sub></sub>
+          <ion-icon
+            routerLink="/auth"
+            slot="start"
+            name="log-in-outline"
+          ></ion-icon>
+        </div>
+      </div>
+    </div>
+    <div [ngClass]="cardDay2Color">
+      <h3>Indice de masa corporal</h3>
+      <div class="Num">
+        <p class="imcNum">{{Imc.imc}}</p>
+      </div>
+      <span class="imcTxt">{{Imc.imcInfo}}!</span>
     </div>
   </div>
 </ion-content>
