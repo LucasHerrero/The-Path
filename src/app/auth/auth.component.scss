@@ -35,7 +35,10 @@
   background-size: cover;
 
 }
-
+ion-note{
+  font-weight: bold;
+  color: rgb(255, 21, 21);
+}
 ion-label{
   font-weight: 600;
 }
@@ -47,8 +50,6 @@ ion-title{
 form {
   display: flex;
   flex-direction: column;
-
-
 }
 
 .btnLogin{

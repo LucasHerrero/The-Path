@@ -8,9 +8,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from '../app.component';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { ProfileComponent } from './profile/profile.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 @NgModule({
   declarations: [AuthComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
@@ -18,6 +20,7 @@ import { ProfileComponent } from './profile/profile.component';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+
 
     IonicStorageModule.forRoot(),
     RouterModule.forChild([

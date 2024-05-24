@@ -6,6 +6,8 @@ import { IntJwtPayload } from '../IntJwtPayload';
 import { AlertController, ToastController } from '@ionic/angular';
 import { User } from 'src/app/rutinas/User';
 import { ProfileServiceService } from './profile-service.service';
+import { ChangePasswordComponent } from '../change-password/change-password.component';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +22,9 @@ export class ProfileComponent implements OnInit {
     private route: Router,
     private alertController: AlertController,
     private profileService: ProfileServiceService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private modalController: ModalController,
+
   ) {}
 
   ngOnInit() {
@@ -37,6 +41,8 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
+
+
 
   closeSession() {
     this.authService.logout();
@@ -81,7 +87,6 @@ export class ProfileComponent implements OnInit {
     toast.present();
   }
 
-  decodePassword(password: string) {}
   editProfile() {
     var resp: any = null;
     if (this.User.birthday) {
@@ -98,14 +103,29 @@ export class ProfileComponent implements OnInit {
       kg: this.User.kg,
     };
 
-    this.profileService.putUserInfo(data).then((response) => {
-      const response2 :any = response;
-      this.presentToastFinish(response2.message, 'checkmark-circle', 'success');
-      setTimeout(() => {
-        this.closeSession();
-      }, 3000);
-    }).catch((error) => {
-      this.presentToastFinish(error.error, 'close-circle', 'danger');
+    this.profileService
+      .putUserInfo(data)
+      .then((response) => {
+        const response2: any = response;
+        this.presentToastFinish(
+          response2.message,
+          'checkmark-circle',
+          'success'
+        );
+        setTimeout(() => {
+          this.closeSession();
+        }, 3000);
+      })
+      .catch((error) => {
+        this.presentToastFinish(error.error, 'close-circle', 'danger');
+      });
+  }
+
+  async openChangePasswordModal() {
+    const modal = await this.modalController.create({
+      component: ChangePasswordComponent
     });
+
+    return await modal.present();
   }
 }

@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <h2 class="tusDatos"> Tus datos </h2>
+  <h2 class="tusDatos">Tus datos</h2>
   <div class="inputs">
     <div class="input">
       <ion-label>Nombre: </ion-label>
@@ -51,23 +51,21 @@
   </div>
   <div class="inputs">
     <div class="input">
-      <ion-item>
-        <div class="date">
-          <ion-label>Fecha de nacimiento: </ion-label>
-          <ion-datetime-button datetime="datetime"></ion-datetime-button>
-          <ion-modal [keepContentsMounted]="true">
-            <ng-template>
-              <ion-datetime
-                id="datetime"
-                presentation="date"
-                [preferWheel]="true"
-                displayFormat="YYYY:MM:DD"
-                [(ngModel)]="User.birthday"
-              ></ion-datetime>
-            </ng-template>
-          </ion-modal>
-        </div>
-      </ion-item>
+      <div class="date">
+        <ion-label>Fecha de nacimiento: </ion-label>
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime
+              id="datetime"
+              presentation="date"
+              [preferWheel]="true"
+              displayFormat="YYYY:MM:DD"
+              [(ngModel)]="User.birthday"
+            ></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </div>
     </div>
   </div>
 
@@ -81,7 +79,14 @@
       Cerrar Sesion
     </ion-button>
   </div>
-  <ion-button class="editPass" expand="block" fill="outline" shape="border">
+  <ion-button
+    id="present-alert"
+    class="editPass"
+    expand="block"
+    fill="outline"
+    shape="border"
+    (click)="openChangePasswordModal()"
+  >
     Editar contraseña
   </ion-button>
 </ion-content>

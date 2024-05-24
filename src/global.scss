@@ -26,21 +26,14 @@
 @import "@ionic/angular/css/flex-utils.css";
 @import "./theme/fonts.scss";
 
-*{
+* {
   font-family: Inter;
 
-
-
-
+  .modal {
+    --height: 40vh;
+    --max-height: max-content;
+    --min-height: min-content;
+    --initial-breakpoint: 0.5;
+    --final-breakpoint: 1;
+  }
 }
-
-
-
-.modal {
-  --height: 50vh;
-  --max-height: 90vh;
-  --min-height: 50vh;
-  --initial-breakpoint: 0.5;
-  --final-breakpoint: 1;
-}
-
