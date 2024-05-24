@@ -1,4 +1,4 @@
-<ion-content>
+ <ion-content>
   <ion-text>
     <h1>{{ selectedDay }}</h1>
   </ion-text>
@@ -9,7 +9,7 @@
       </div>
       <div class="cardDay" *ngIf="isAuthenticatedVar">
         <div class="noRutinas" *ngIf="noRutinas">
-          <p>No tienes rutinas para hoy</p>
+          <p>No tienes rutinas para hoy </p>
           <sub></sub>
           <ion-icon
             routerLink="/tu-semana"
@@ -34,7 +34,7 @@
       </div>
       <div class="cardDay" *ngIf="!isAuthenticatedVar">
         <div class="noRutinas">
-          <p>Debes iniciar sesión para desbloquear todas las funcionalidades</p>
+          <p>Inicia sesión y desbloquea todas las funcionalidades!</p>
           <sub></sub>
           <ion-icon
             routerLink="/auth"
