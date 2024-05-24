@@ -17,20 +17,21 @@ import { ModalController } from '@ionic/angular';
 export class ProfileComponent implements OnInit {
   User2: IntJwtPayload = {} as IntJwtPayload;
   User: User = {} as User;
+  userId: number = 0;
   constructor(
     private authService: AuthService,
     private route: Router,
     private alertController: AlertController,
     private profileService: ProfileServiceService,
     private toastController: ToastController,
-    private modalController: ModalController,
-
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
     this.authService.isAuthenticated().then((isAuthenticated) => {
       if (isAuthenticated) {
         this.authService.decodeToken().then((decodedToken: IntJwtPayload) => {
+          this.userId = decodedToken.userId;
           this.profileService
             .getUserById(decodedToken.userId)
             .subscribe((user) => {
@@ -41,8 +42,6 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
-
-
 
   closeSession() {
     this.authService.logout();
@@ -123,9 +122,52 @@ export class ProfileComponent implements OnInit {
 
   async openChangePasswordModal() {
     const modal = await this.modalController.create({
-      component: ChangePasswordComponent
+      component: ChangePasswordComponent,
     });
 
     return await modal.present();
+  }
+  async confirmDeleteUser() {
+    const alert2 = await this.alertController.create({
+      header: '¿Estás seguro que quieres ELIMINAR tu cuenta?.',
+
+      message: 'Una vez hecho NO HABRA VUELTA ATRAS!',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {},
+        },
+        {
+          text: 'Confirmar',
+
+          handler: () => {
+            this.deleteUser();
+          },
+        },
+      ],
+    });
+
+    await alert2.present();
+  }
+
+  async deleteUser() {
+    this.profileService
+      .deleteUser(this.userId)
+      .then((response) => {
+        const response2: any = response;
+        this.presentToastFinish(
+          response2.message,
+          'checkmark-circle',
+          'success'
+        );
+        setTimeout(() => {
+          this.closeSession();
+        }, 3000);
+      })
+      .catch((error) => {
+        this.presentToastFinish(error.error, 'close-circle', 'danger');
+      });
   }
 }

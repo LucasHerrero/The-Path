@@ -72,9 +72,11 @@
   <div class="btnCerrar">
     <ion-button
       (click)="confirmDelete()"
+      style="color: rgb(255, 79, 79);"
       expand="block"
       fill="clear"
       shape="round"
+
     >
       Cerrar Sesion
     </ion-button>
@@ -83,10 +85,20 @@
     id="present-alert"
     class="editPass"
     expand="block"
-    fill="outline"
-    shape="border"
+    fill="clear"
+    shape="round"
     (click)="openChangePasswordModal()"
   >
     Editar contraseña
   </ion-button>
+  <ion-button
+  (click)="confirmDeleteUser()"
+  style="color: rgb(255, 79, 79);"
+  expand="block"
+  fill="clear"
+  shape="round"
+
+>
+  Eliminar cuenta
+</ion-button>
 </ion-content>

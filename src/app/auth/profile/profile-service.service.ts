@@ -41,4 +41,18 @@ export class ProfileServiceService {
         throw error;
       });
   }
+
+  deleteUser(id:number) {
+    return this.http
+      .delete(`${this.baseUrl}/deleteUser/${id}`)
+      .toPromise()
+      .then((response) => {
+        console.log(response);
+        return response;
+      })
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+  }
 }
