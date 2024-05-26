@@ -4,8 +4,9 @@
       <ion-button (click)="closeModal()">Cancelar</ion-button>
     </ion-buttons>
     <ion-title>Añadir Ejercicios</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="guardarRutina()">Guardar</ion-button>
+    <ion-buttons  slot="end">
+      <ion-button *ngIf="!isLoading2" (click)="guardarRutina()">Guardar</ion-button>
+      <ion-spinner *ngIf="isLoading2" name="crescent"></ion-spinner>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -16,10 +17,14 @@
   ></ion-searchbar>
   <ion-row>
     <ion-col size="6">
-      <ion-button expand="full" (click)="presentActionSheet()">Grupos Musculares</ion-button>
+      <ion-button expand="full" (click)="presentActionSheet()"
+        >Grupos Musculares</ion-button
+      >
     </ion-col>
     <ion-col size="6">
-      <ion-button expand="full" (click)="presentEquipmentActionSheet()">Equipamiento</ion-button>
+      <ion-button expand="full" (click)="presentEquipmentActionSheet()"
+        >Equipamiento</ion-button
+      >
     </ion-col>
   </ion-row>
   <ion-item *ngIf="isLoading">

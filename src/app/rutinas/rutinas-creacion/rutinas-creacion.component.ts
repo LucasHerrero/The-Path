@@ -31,6 +31,7 @@ export class RutinasCreacionComponent implements OnInit {
   dia: string = '';
   user: IntJwtPayload = {} as IntJwtPayload;
   isLoading = false;
+  isLoading2 = false;
 
   constructor(
     private modalController: ModalController,
@@ -305,14 +306,15 @@ export class RutinasCreacionComponent implements OnInit {
   }
 
   async guardarRutina() {
+    this.isLoading2 = true;
     const check: boolean = await this.storage.get('rutina');
     const ejercicioId = this.ejerciciosSeleccionados.map((e) => e);
-    console.log(this.ejerciciosSeleccionados);
+
     if (check == true) {
       const idRutina = await this.storage.get('rutinaId');
-      console.log(idRutina, ejercicioId);
       this.tusRutinasService.addEjercicio(idRutina, ejercicioId).subscribe(
         (data) => {
+          this.isLoading = true;
           this.presentToastSuccess('Ejercicio añadido a la rutina');
           setTimeout(() => {
             this.router.navigate(['/tus-rutinas']).then(() => {
@@ -321,6 +323,7 @@ export class RutinasCreacionComponent implements OnInit {
           }, 2000);
         },
         (error) => {
+          this.isLoading2 = false;
           this.presentToastError(error);
         }
       );
@@ -341,6 +344,7 @@ export class RutinasCreacionComponent implements OnInit {
           await this.rutinasCreacionService
             .postRutina(data)
             .then((response) => {
+              this.isLoading2 = false;
               this.presentToastSuccess('Creacion de rutina exitosa');
               setTimeout(() => {
                 this.router.navigate(['/tus-rutinas']).then(() => {
@@ -349,6 +353,7 @@ export class RutinasCreacionComponent implements OnInit {
               }, 2000);
             })
             .catch((error) => {
+              this.isLoading2 = false;
               this.presentToastError(error);
             });
           // location.reload();
