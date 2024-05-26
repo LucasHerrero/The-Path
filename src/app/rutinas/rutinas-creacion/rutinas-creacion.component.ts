@@ -314,8 +314,8 @@ export class RutinasCreacionComponent implements OnInit {
       const idRutina = await this.storage.get('rutinaId');
       this.tusRutinasService.addEjercicio(idRutina, ejercicioId).subscribe(
         (data) => {
-          this.isLoading = true;
-          this.presentToastSuccess('Ejercicio añadido a la rutina');
+          this.isLoading2 = true;
+          this.presentToastSuccess('Ejercicio añadido a la rutina. Redirigiendo a tu rutina...');
           setTimeout(() => {
             this.router.navigate(['/tus-rutinas']).then(() => {
               location.reload();
@@ -345,7 +345,7 @@ export class RutinasCreacionComponent implements OnInit {
             .postRutina(data)
             .then((response) => {
               this.isLoading2 = false;
-              this.presentToastSuccess('Creacion de rutina exitosa');
+              this.presentToastSuccess('Creacion de rutina exitosa.Redirigiendo a tu rutina...');
               setTimeout(() => {
                 this.router.navigate(['/tus-rutinas']).then(() => {
                   location.reload();
