@@ -111,9 +111,7 @@ export class ProfileComponent implements OnInit {
           'checkmark-circle',
           'success'
         );
-        setTimeout(() => {
-          this.closeSession();
-        }, 3000);
+
       })
       .catch((error) => {
         this.presentToastFinish(error.error, 'close-circle', 'danger');
