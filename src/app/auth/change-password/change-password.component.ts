@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { AuthService } from '../Auth.service';
 import { IntJwtPayload } from '../IntJwtPayload';
+
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
@@ -13,14 +14,19 @@ export class ChangePasswordComponent implements OnInit {
     private modalController: ModalController,
     private authService: AuthService,
     private profileServiceService: ProfileServiceService,
-    private toastController : ToastController
+    private toastController : ToastController,
   ) {}
   newPassword: string = '';
   repeatPassword: string = '';
   check: boolean = true;
   idUser: number = 0;
 
+
   ngOnInit() {
+
+
+
+
     this.authService.isAuthenticated().then((isAuthenticated) => {
       if (isAuthenticated) {
         this.authService.decodeToken().then((decodedToken: IntJwtPayload) => {

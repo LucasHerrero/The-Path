@@ -23,7 +23,7 @@ import { TusRutinasService } from 'src/app/tus-rutinas/tus-rutinas.service';
 export class RutinasCreacionComponent implements OnInit {
   Ejercicio: Ejercicios[] = [];
   ejercicio: Ejercicios = {} as Ejercicios;
-  ejerciciosSeleccionados: Ejercicios[] = [];
+  ejerciciosSeleccionados: number[] = [];
   showMuscleGroups: any;
   showEquipment: any;
   nombreRutina: string = '';
@@ -269,22 +269,24 @@ export class RutinasCreacionComponent implements OnInit {
 
   seleccionarEjercicio(ejercicio: Ejercicios) {
     if (ejercicio) {
-      if (this.ejerciciosSeleccionados.includes(ejercicio)) {
+      if (this.ejerciciosSeleccionados.includes(ejercicio.id)) {
         this.ejerciciosSeleccionados = this.ejerciciosSeleccionados.filter(
-          (e) => e !== ejercicio
+          (e) => e !== ejercicio.id
         );
       } else {
         if (this.ejerciciosSeleccionados.length >= this.cantidadEjercicios) {
           this.mostrarAlerta();
         } else {
-          this.ejerciciosSeleccionados.push(ejercicio);
+          this.ejerciciosSeleccionados.push(ejercicio.id);
         }
       }
     }
+    console.log(this.ejerciciosSeleccionados);
+
   }
 
   isSelected(ejercicio: Ejercicios) {
-    return this.ejerciciosSeleccionados.includes(ejercicio);
+    return this.ejerciciosSeleccionados.includes(ejercicio.id);
   }
 
   async logeate() {
@@ -304,7 +306,8 @@ export class RutinasCreacionComponent implements OnInit {
 
   async guardarRutina() {
     const check: boolean = await this.storage.get('rutina');
-    const ejercicioId = this.ejerciciosSeleccionados.map((e) => e.id);
+    const ejercicioId = this.ejerciciosSeleccionados.map((e) => e);
+    console.log(this.ejerciciosSeleccionados);
     if (check == true) {
       const idRutina = await this.storage.get('rutinaId');
       console.log(idRutina, ejercicioId);
@@ -331,7 +334,7 @@ export class RutinasCreacionComponent implements OnInit {
             Dia: this.dia,
             userFk: this.user.userId,
 
-            ejercicios: this.ejerciciosSeleccionados.map((e) => e.id),
+            ejercicios: this.ejerciciosSeleccionados.map((e) => e),
           };
 
           //POST

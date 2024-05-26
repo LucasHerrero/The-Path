@@ -342,7 +342,7 @@ export class TusRutinasPage implements OnInit {
                 this.tusRutinasService
                   .getTusRutinas(decodedToken.userId)
                   .subscribe((data2) => {
-                    console.log(data2);
+
                     if (data2.length == 0) {
                       this.noRutinas = true;
                       setTimeout(() => {
