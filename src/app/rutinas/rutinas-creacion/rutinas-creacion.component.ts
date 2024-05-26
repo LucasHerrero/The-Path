@@ -49,7 +49,6 @@ export class RutinasCreacionComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.isLoading = true;
     this.rutinasCreacionService.getEjercicios().subscribe(
       (data) => {
@@ -63,7 +62,7 @@ export class RutinasCreacionComponent implements OnInit {
     );
   }
 
-  async presentToastSuccess(msg : string) {
+  async presentToastSuccess(msg: string) {
     const toast = await this.toastController.create({
       message: msg,
       duration: 2000,
@@ -82,6 +81,21 @@ export class RutinasCreacionComponent implements OnInit {
   async presentToastError(msg: any) {
     const toast = await this.toastController.create({
       message: msg.error,
+      duration: 2000,
+      color: 'danger',
+      position: 'top',
+      buttons: [
+        {
+          side: 'start',
+          icon: 'close',
+        },
+      ],
+    });
+    toast.present();
+  }
+  async presentToastErrorEj(msg: any) {
+    const toast = await this.toastController.create({
+      message: msg,
       duration: 2000,
       color: 'danger',
       position: 'top',
@@ -202,8 +216,6 @@ export class RutinasCreacionComponent implements OnInit {
     await alert.present();
   }
   async datosRutina1() {
-
-
     this.nombreRutina = await this.storage.get('nombreRutina');
     this.cantidadEjercicios = await this.storage.get('cantidadEjercicios');
 
@@ -283,7 +295,6 @@ export class RutinasCreacionComponent implements OnInit {
       }
     }
     console.log(this.ejerciciosSeleccionados);
-
   }
 
   isSelected(ejercicio: Ejercicios) {
@@ -315,7 +326,9 @@ export class RutinasCreacionComponent implements OnInit {
       this.tusRutinasService.addEjercicio(idRutina, ejercicioId).subscribe(
         (data) => {
           this.isLoading2 = true;
-          this.presentToastSuccess('Ejercicio añadido a la rutina. Redirigiendo a tu rutina...');
+          this.presentToastSuccess(
+            'Ejercicio añadido a la rutina. Redirigiendo a tu rutina...'
+          );
           setTimeout(() => {
             this.router.navigate(['/tus-rutinas']).then(() => {
               location.reload();
@@ -327,37 +340,44 @@ export class RutinasCreacionComponent implements OnInit {
           this.presentToastError(error);
         }
       );
-
     } else {
       this.authService.isAuthenticated().then(async (isAuth) => {
         if (isAuth) {
-          const data = {
-            nombre: this.nombreRutina,
-            cantidadEj: this.ejerciciosSeleccionados.length,
-            Dia: this.dia,
-            userFk: this.user.userId,
+          if (this.ejerciciosSeleccionados.length == 0) {
+            this.isLoading2 = false;
+            this.presentToastErrorEj('Debes seleccionar al menos un ejercicio');
+            return;
+          } else {
+            const data = {
+              nombre: this.nombreRutina,
+              cantidadEj: this.ejerciciosSeleccionados.length,
+              Dia: this.dia,
+              userFk: this.user.userId,
 
-            ejercicios: this.ejerciciosSeleccionados.map((e) => e),
-          };
+              ejercicios: this.ejerciciosSeleccionados.map((e) => e),
+            };
 
-          //POST
-          await this.rutinasCreacionService
-            .postRutina(data)
-            .then((response) => {
-              this.isLoading2 = false;
-              this.presentToastSuccess('Creacion de rutina exitosa.Redirigiendo a tu rutina...');
-              setTimeout(() => {
-                this.router.navigate(['/tus-rutinas']).then(() => {
-                  location.reload();
-                });
-              }, 2000);
-            })
-            .catch((error) => {
-              this.isLoading2 = false;
-              this.presentToastError(error);
-            });
-          // location.reload();
-          this.modalController.dismiss();
+            //POST
+            await this.rutinasCreacionService
+              .postRutina(data)
+              .then((response) => {
+                this.isLoading2 = false;
+                this.presentToastSuccess(
+                  'Creacion de rutina exitosa.Redirigiendo a tu rutina...'
+                );
+                setTimeout(() => {
+                  this.router.navigate(['/tus-rutinas']).then(() => {
+                    location.reload();
+                  });
+                }, 2000);
+              })
+              .catch((error) => {
+                this.isLoading2 = false;
+                this.presentToastError(error);
+              });
+
+            this.modalController.dismiss();
+          }
         } else {
           this.logeate();
           this.modalController.dismiss();
