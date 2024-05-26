@@ -14,19 +14,14 @@ export class ChangePasswordComponent implements OnInit {
     private modalController: ModalController,
     private authService: AuthService,
     private profileServiceService: ProfileServiceService,
-    private toastController : ToastController,
+    private toastController: ToastController
   ) {}
   newPassword: string = '';
   repeatPassword: string = '';
   check: boolean = true;
   idUser: number = 0;
 
-
   ngOnInit() {
-
-
-
-
     this.authService.isAuthenticated().then((isAuthenticated) => {
       if (isAuthenticated) {
         this.authService.decodeToken().then((decodedToken: IntJwtPayload) => {
@@ -73,20 +68,18 @@ export class ChangePasswordComponent implements OnInit {
       password: this.newPassword,
     };
 
-    this.profileServiceService.updatePassword(this.idUser, data).then((response) => {
-      const response2: any = response;
-      this.presentToastFinish(
-        response2.message,
-        'checkmark-circle',
-        'success'
-      );
-      setTimeout(() => {
-       this.closeModal();
-       this.closeSession();
-      }, 3000);
-    })
-    .catch((error) => {
-      this.presentToastFinish(error.error, 'close-circle', 'danger');
-    });
+    this.profileServiceService
+      .updatePassword(this.idUser, data)
+      .then((response: any) => {
+        const response2: any = `${response.message} .Cerrando sesión...`;
+        this.presentToastFinish(response2, 'checkmark-circle', 'success');
+        setTimeout(() => {
+          this.closeModal();
+           this.closeSession();
+        }, 3000);
+      })
+      .catch((error) => {
+        this.presentToastFinish(error.error, 'close-circle', 'danger');
+      });
   }
 }
