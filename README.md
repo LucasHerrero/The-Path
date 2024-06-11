@@ -1,6 +1,6 @@
 ﻿# The Path 💪
 
-## Live Demo: Soon...
+## Live Demo: https://thepathapp.netlify.app
 
 Esta aplicación promete ser lo que necesitas para que puedas llevar de una forma más rápida y eficaz tus rutinas en el bolsillo. Así te sientes motivado día a día a seguir mejorando y viendo el progreso.
 Con esta aplicación conseguimos tener unas rutinas personalizables, así como también mantener un control de lo que estamos haciendo. Esto siguiendo una forma intuitiva eficaz y por sobre todo motivacional. 
